@@ -6,6 +6,7 @@ install:
 #commands to run the tests
 script:
   - pytest
+  - coverage
   - coverage3 report
   - coveralls
 after success:
