@@ -2,7 +2,7 @@
 #### Travis-Badge
 [![Build Status](https://travis-ci.org/Peace-Apple/SendIT.svg?branch=ft-challenge-two)](https://travis-ci.org/Peace-Apple/SendIT)
 #### Coveralls-Badge
-
+[![Coverage Status](https://coveralls.io/repos/github/Peace-Apple/SendIT/badge.svg?branch=ft-challenge-two)](https://coveralls.io/github/Peace-Apple/SendIT?branch=ft-challenge-two)
 #### Codeclimate-Badge
 
 
