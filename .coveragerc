@@ -2,7 +2,13 @@
 
 [report]
 omit =
-       */venv
+       */venv/*
+       */python?.?/*
+       */site-packages/nose/*
+       */__pycache__/*
+       *.pyc
+       */mymodule/tests/*
+       *__init__.py
        */api\__init__.py
        */api\controllers\__init__.py
        */api\handlers\__init__.py
