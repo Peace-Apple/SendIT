@@ -46,3 +46,7 @@ class UserController(MethodView):
             'data': current_user
         }
         return jsonify(response_object), 201
+
+
+
+
