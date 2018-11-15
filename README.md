@@ -1,6 +1,6 @@
 ## SENDIT
 #### Travis-Badge
-
+[![Build Status](https://travis-ci.org/Peace-Apple/SendIT.svg?branch=ft-challenge-two)](https://travis-ci.org/Peace-Apple/SendIT)
 #### Coveralls-Badge
 
 #### Codeclimate-Badge
