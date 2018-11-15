@@ -38,4 +38,14 @@ class UserModel:
         self.users.append(new_user)
         return new_user
 
+    def get_all_users(self):
+        return self.users
+
+    def get_one_user(self, user_id):
+        for user in self.users:
+            if user_id == user['user_id']:
+                return user
+            return None
+
     users = []
+
