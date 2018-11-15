@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/profile.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/vieworder.css">
+        <script type="text/javascript" src="assets/js/main.js"></script>
+    </head>
+    <body class="main-image">
+        <!-- structuring the users profile page -->
+            <b><header>
+                    <h2>SEND-IT</h2>
+                <div>
+                    <ul>
+                    <li><a href="vieworder.html">Dashboard</a></li>
+                    <li><a href="order.html">Send A Parcel</a></li>
+                    <li class="active"><a href="profile.html">Your Profile</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+                </div>
+                </header></b>
+                <div>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="profile-content">
+                                <img src="assets/images/avatar.jpg">
+                                <div class="user-details">
+                                        <h2>Peace Apple</h2>
+                                        <p>applepeace@gmail.com</p>
+                                        <p>0700-000-000</p>
+                                        <p>Female</p>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="profile-info">
+                                <div id="top_links">
+                                    <ul>
+                                        <li><h3><a href="#">Delivered Orders (0)</h3></a></li>
+                                        <li><h3><a href="#">Orders in Transit (3)</h3></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="order-content">
+                                    <h3>PARCEL ONE</h3>
+                                        <p class="links">
+                                            <label><strong>Posted At : </strong>2-Nov-2018</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;                                                                                       
+                                            <label onclick="deleteOrder()"><a href="#">Delete</a></label>
+                                        </p>
+                                        
+                                </div>
+                                <div class="order-content">
+                                        <h3>PARCEL TWO</h3>
+                                            <p class="links">
+                                                <label><strong>Posted At : </strong>2-Nov-2018</label>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;                                                
+                                                <label onclick="deleteOrder()"><a href="#">Delete</a></label>
+                                            </p>
+                                            
+                                    </div>
+                                    <div class="order-content">
+                                        <h3>PARCEL THREE</h3>
+                                            <p class="links">
+                                                <label><strong>Posted At : </strong>2-Nov-2018</label>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label onclick="deleteOrder()"><a href="#">Delete</a></label>
+                                            </p>
+                                            
+                                    </div>     
+                            </div>    
+                        </td>
+                    </tr>
+                </table>   
+                </div>
+                
+    </body>
+</html>
