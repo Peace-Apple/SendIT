@@ -26,15 +26,6 @@ class ResponseErrors:
         }
         return jsonify(response_object), 400
 
-    # @staticmethod
-    # def invalid_data_type():
-    #     response_object = {
-    #         'status': 'fail',
-    #         'error_message': 'Wrong data type, please use a number',
-    #         'data': False
-    #     }
-    #     return jsonify(response_object), 400
-
     @staticmethod
     def empty_data_fields():
         response_object = {
