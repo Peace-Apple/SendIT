@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Order</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/order.css">
+        <script type="text/javascript" src="assets/js/main.js"></script>
+    </head>
+    <body class="main-image">
+        <!-- structuring the page for users to make parcel delivery orders -->
+            <b><header>
+                    <h2>SEND-IT</h2>
+                <div>
+                    <ul>
+                    <li><a href="vieworder.html">Dashboard</a></li>
+                    <li class="active"><a href="order.html">Send A Parcel</a></li>
+                    <li><a href="profile.html">Your Profile</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+                </div>
+                </header></b>
+
+                <div class="main-content">
+                    <table>
+                    <tr>
+                    <td>
+                            <!--main image -->
+                        <div class="img-order">
+                            <img src="assets/images/im3.png"><br>
+                        </div>
+                    </td>
+                    <!-- Designing the form -->
+                    <td>
+                    <div class="form-content">
+                        <form action="" method="POST">
+                            <table>
+                                <tr>
+                                    <td colspan="2"><h2>Create a Parcel Delivery Order</h2></td>
+                                </tr>
+                                <tr>
+                                    <td>FROM:</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="" placeholder="Enter pickup location" size="25" required=""></td>
+                                    <td><input type="text" name="pcode" placeholder="Enter Senders Address" size="25"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="" placeholder="Senders Name" size="25" required=""></td>
+                                    <td><input type="number" name="pcode" placeholder="Enter Senders Contact" size="25"></td>
+                                </tr>
+                                <tr>
+                                    <td>TO:</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="" placeholder="Enter destination" size="25" required=""></td>
+                                    <td><input type="text" name="pcode" placeholder="Enter Receivers Address" size="25"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="" placeholder="Receivers Name" size="25" required=""></td>
+                                    <td><input type="number" name="pcode" placeholder="Enter Receivers Contact" size="25"></td>
+                                </tr>
+                                <tr>
+                                    <td>WEIGHT:</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="number" name="" placeholder="KG (Eg: 0.01)" size="" required=""></td>
+                                    <td><input type="text" name="pcode" placeholder="Enter Parcel Details" size="25"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="submit" name="" value="Submit">
+                                    </td>
+                                    <td>
+                                        <input type="reset" name="but" value="Clear">
+                                    </td>
+                                    </tr>
+                            </table>
+                        </form>
+                    </td>
+                    </tr>
+                    </table>
+                        
+                    </div>
+                </div>
+                
+    </body>
+</html>
