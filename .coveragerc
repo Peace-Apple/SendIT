@@ -2,7 +2,7 @@
 
 [report]
 omit =
-       venv/*
+       */venv
        */api\__init__.py
        */api\controllers\__init__.py
        */api\handlers\__init__.py
@@ -12,4 +12,5 @@ omit =
        */api\views\__init__.py
        */run.py
        */api\handlers\response_errors.py
+       
 
