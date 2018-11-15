@@ -30,4 +30,6 @@ class Routes:
                          methods=['PUT'], strict_slashes=False)
         app.add_url_rule('/api/v1/users/signup/', view_func=UserController.as_view('register_user'),
                          methods=['POST'], strict_slashes=False)
+        app.add_url_rule('/api/v1/users/login/', view_func=UserController.as_view('login_user'),
+                         methods=['POST'], strict_slashes=False)
 
