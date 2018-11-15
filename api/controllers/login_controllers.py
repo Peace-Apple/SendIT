@@ -11,6 +11,9 @@ class LoginController(MethodView):
     """
     User login class
     """
+    user_name = None
+    password = None
+    user_id = None
     data = UserModel()
 
     def post(self):
@@ -22,32 +25,34 @@ class LoginController(MethodView):
             return ResponseErrors.missing_fields(keys)
 
         try:
-            user_name = post_data.get("user_name").strip()
-            password = post_data.get("password").strip()
-            user_id = post_data("user_id")
+            self.user_name = post_data.get('user_name').strip()
+            self.password = post_data.get('password').strip()
+            self.user_id = post_data.get('user_id')
         except AttributeError:
             return ResponseErrors.invalid_data_format()
 
-        if not user_name or not password or not user_id:
+        if not self.user_name or not self.password or not self.user_id:
             return ResponseErrors.empty_data_fields()
 
-        user = self.data.get_all_users()
+        users = self.data.get_all_users()
+        print(self.data.get_all_users())
 
-        if self.user_name == user['user_name'] and self.user_id == user['user_id']:
+        for single_user in users:
+            if self.user_id == single_user['user_id']:
 
-            response_object = {
-                'status': 'success',
-                'message': 'You are logged in',
-                'logged_in_as': user_name
-            }
+                response_object = {
+                    'status': 'success',
+                    'message': 'You are logged in',
+                    'logged_in_as': single_user
+                }
 
-            return jsonify(response_object), 200
+                return jsonify(response_object), 200
 
-        else:
-            response_object = {
-                'status': 'fail',
-                'message': 'User does not exist.'
-            }
-            return jsonify(response_object), 404
+            else:
+                response_object = {
+                    'status': 'fail',
+                    'message': 'User does not exist.'
+                }
+                return jsonify(response_object), 404
 
 
