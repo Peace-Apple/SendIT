@@ -10,7 +10,7 @@ from run import app
 
 class TestSendIT(unittest.TestCase):
     """
-    Tests for the api endpoints
+    Tests for the api endpoints.
     """
     def setUp(self):
         self.app = app
