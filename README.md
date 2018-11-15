@@ -1,39 +1,104 @@
-## SendIT Project Overview
-SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.
+## SENDIT
+#### Travis-Badge
 
-### Required Features
-1. Users can create an account and log in.
-2. Users can create a parcel delivery order.
-3. Users can change the destination of a parcel delivery order.
-4. Users can cancel a parcel delivery order.
-5. Users can see the details of a delivery order.
-6. Admin can change the status
+#### Coveralls-Badge
+
+#### Codeclimate-Badge
+
+
+### About
+SendIT is a courier service that helps users deliver parcels to different destinations. SendIT
+provides courier quotes based on weight categories.
+
+### Features
+1. Create a parcel delivery order
+2. Get all parcel delivery orders
+3. Get a specific parcel delivery order
+4. Cancel a parcel delivery order
+5. Get all parcel delivery orders made by a specific user
 
 ### Links
-#### Gh-pages:
-https://peace-apple.github.io/SendIT/
-This link takes you where the user interface template is hosted on gh-pages
 
-#### Provisional Login Credentials
-There are two users of this system i.e the admin and the client. These two interact with the system differently.
+#### Gh-pages:  
+https://peace-apple.github.io/SendIT/
+
+This link takes you where the user interface template is hosted on gh-pages.
+
+#### Heroku:    
+
+This link takes you to the api that is hosted on heroku.
+
+### Getting Started 
+The following will get you started
+#### Prerequisites
+You will need to install the following
+
+```bash
+- git : To clone, update and make commits to the repository
+- python3: The base language used to develop the api
+- pip: A python package used to install project requirements
 ```
-To log in as a user 
-Username: user
-Password: user
-```
-```
-To log in as an admin 
-Username: admin
-Password: admin
+#### Installation
+The ft-challenge-one folder houses the user interface. To access the user interface, open the index.html.
+The ft-challenge-two folder contains the system backend services.
+- To install the requirements, run:
+- [Python](https://www.python.org/) A general purpose programming language
+- [Pip](https://pypi.org/project/pip/) A tool for installing python packages
+- [Virtualenv](https://virtualenv.pypa.io/en/stable/)  A tool to create isolated Python environments
+
+#### Development setup
+- Create a virtual environment and activate it
+    ```bash
+     Create: virtualenv venv
+     On windows: source /venv/scripts/activate
+     On linux: /venv/bin/activate
+     
+    ```
+- Install dependencies 
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+- Run the application
+    ```bash
+    cd SendIT
+    python run.py
+    ```
+- Thereafter you can access the system api Endpoints:
+
+| End Point                                           | Verb |Use                                       |
+| ----------------------------------------------------|------|------------------------------------------|
+|`/api/v1/parcels/`                                   |GET   |Gets all parcel delivery orders           |
+|`/api/v1/parcels/<int:parcel_id>/`                   |GET   |Gets a specific parcel delivery order     |
+|`/api/v1/parcels/`                                   |POST  |Posts a parcel delivery order             |
+|`/api/v1/parcels/<int:parcel_id>/cancel/`            |PUT   |Updates the status of a delivery order    |
+|`/api/v1/users/<int:user_id>/parcels/`               |GET   |Gets all parcel orders for a specific user|
+
+#### Testing
+
+- To run the tests, run the following commands
+
+```bash
+pytest --cov 
 ```
 
 #### Built With
-HTML
-CSS
-JavaScript
 
-### Authors
-Peace Acio - Initial work - https://github.com/Peace-Apple
+* [Flask](http://flask.pocoo.org/docs/1.0/) - The web framework used
+* [Python](https://www.python.org/) - Framework language
+* HTML
+* CSS
 
-### Acknowledgments
-Andela Software Development Community
+## Authors
+
+* **Peace Acio** - *Initial work* - [Peace-Apple](https://github.com/Peace-Apple)
+
+## Acknowledgments
+
+* Andela Software Development Community
+
+
+
+
+
+
+
