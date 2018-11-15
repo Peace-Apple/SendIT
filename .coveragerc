@@ -17,6 +17,6 @@ omit =
        */api\utils\__init__.py
        */api\views\__init__.py
        */run.py
-       */api\handlers\response_errors.py
+       */response_errors.py
        
 
