@@ -3,6 +3,7 @@ Module to handle url requests
 """
 from api.controllers.parcel_controllers import ParcelController
 from api.controllers.user_controllers import UserController
+from api.controllers.login_controllers import LoginController
 
 
 class Routes:
@@ -30,6 +31,6 @@ class Routes:
                          methods=['PUT'], strict_slashes=False)
         app.add_url_rule('/api/v1/users/signup/', view_func=UserController.as_view('register_user'),
                          methods=['POST'], strict_slashes=False)
-        app.add_url_rule('/api/v1/users/login/', view_func=UserController.as_view('login_user'),
+        app.add_url_rule('/api/v1/users/login/', view_func=LoginController.as_view('login_user'),
                          methods=['POST'], strict_slashes=False)
 
