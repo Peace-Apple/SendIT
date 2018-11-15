@@ -1,0 +1,38 @@
+/*styling the dashboard*/
+
+.main-content h2{
+	color: maroon;
+	text-align: center;
+	margin: 8px;
+}
+.parcel-link{
+	text-align: center;
+	font-weight: bold;
+	font-size: 15px;
+	padding: 10px;
+	border: 1px solid silver;
+	background-color: #05386B;
+	border-radius: 100px;
+	position: relative;
+	width: 150px;
+	margin-left: 470px;
+	margin-bottom: 10px;
+		
+}
+.parcel-link a{
+	color: white;
+	text-decoration: none;
+}
+
+@media (min-width: 760px) and (max-width: 1024px){
+	
+}
+
+@media screen and (max-width: 760px){
+	.parcel-link{
+		margin: 30px 80px;
+	}
+	.main-content h2{
+		font-size: 20px;
+	}	
+}

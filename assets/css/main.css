@@ -1,0 +1,201 @@
+/*styling my login and signup pages*/
+body{
+	display: flex;
+    flex-direction: column;
+}
+body.cover-image{
+	background-image: url(../../assets/images/im.jpg);
+	background-size: 100%;
+}
+.cred{
+	color:black;
+}
+div.login-content{
+    width: 120%;
+	height: 110%;
+	position: fixed;
+	left: 0%;
+	overflow: auto;
+	margin-top: 110px;
+}
+div.login-main{
+    margin: 4% 29%;
+	width: 25%;
+	padding: 25px 5px 10px 5px;
+	background-color: white;
+	border:1px solid silver;
+	box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+div.login-field{
+    background-color: white;
+	width: 70%;
+	margin-left: 35px;
+	border-radius: 5px;
+	padding: 15px 15px;
+
+}
+div.login-heading{
+	font-size: 15px;
+    text-align: center;
+}
+div.login-heading h2{
+	font-size: 25px;
+	color: maroon;
+}
+div.login-heading p{
+	font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+div.login-field input{
+	border: 1px solid maroon;
+	padding: 8px 10px;
+	border-radius: 5px;
+	margin-bottom:15px;
+	width: 102%;
+}
+div.login-field form input[type="button"]{
+	border: 1px solid maroon;
+	padding: 8px 10px;
+	border-radius: 5px;
+	width: 50%;
+	background-color: #05386B;
+    color: white;
+    margin-left: 80px;
+}
+div.login-field  button[type="submit"]{
+	border: 1px solid maroon;
+	padding: 8px 10px;
+	border-radius: 5px;
+	width: 50%;
+	background-color: #05386B;
+    color: white;
+    margin-left: 80px;
+}
+div.login-main p.down{
+    margin-bottom:30px;
+    margin-left: 15px;
+}
+
+div.login-main p.down a{
+	text-decoration:none;
+    color: maroon;
+    font-weight: bold;
+}
+div.login-main p.down a:hover{
+    color: black;
+}
+
+div.login-main p.down a.lft{
+	float: left;
+}
+
+div.login-main p.down a.rgt{
+	float: right;
+}
+
+/*styling the header*/
+header{
+	width: 100%;
+	position: absolute;
+	top:0%;
+	left:0%;
+	border-bottom: 1px solid silver;
+	background-color: azure;
+}
+header h2{
+	float: left;
+	padding:10px;
+	margin-left: 70px;
+}
+header ul{
+	height: 30px;
+	overflow:auto;
+	list-style: none;
+	float: right;
+	padding: 10px;
+	margin-right: 40px;
+	top: 10px;
+}
+header ul li{
+	display: inline;
+	padding: 0px 0px 0px 15px;
+}
+header ul li a{
+	text-decoration: none;
+	color: lightcoral;
+	position: relative;
+}
+header ul li:hover a{
+	color: black;
+
+}
+header ul li.active a{
+	color: black;
+}
+/*styling the body*/
+.main-image{
+	background-image: url("../../assets/images/blank2.jpg");
+	background-size: cover;
+	
+}
+div.main-content{
+	border:1px solid silver;
+	position: absolute;
+	margin-top: 120px;
+	width: 81%;
+	height: 500px;
+	padding: 20px;
+	margin-left: 100px;
+	margin-right: 100px;
+	background-color: antiquewhite;
+}
+
+@media (min-width: 760px) and (max-width: 1024px){
+	div.login-main{
+		width: 80%;
+		margin: 90px auto;
+	}
+	div.login-main.signup{
+		margin: 20px auto;
+	}
+	body.cover-image{
+		background-repeat: no-repeat;
+		background-size: 100% 100vh;
+	}
+}
+
+@media screen and (max-width: 760px){
+	div.login-main{
+		width: 80%;
+		margin: 100px auto;
+	}
+	div.login-main.signup{
+		margin: 100px auto;
+	}
+	body.cover-image{
+		background: none;
+	}
+	div.login-main p.down a{
+		font-size: 12px;
+	}
+	body.main-image{
+		background-repeat: no-repeat;
+		background-size: 100% 100vh;
+	}
+	div.main-content{
+		margin-left: 10px;
+		margin-top: 170px;
+	}
+	header h2{
+		margin-left: 10px;
+		padding: 5px;
+	}
+	header ul{
+		margin-right: 10px;
+	}
+	header ul li{
+		padding: 0px 0px 0px 5px;
+	}
+	
+} 

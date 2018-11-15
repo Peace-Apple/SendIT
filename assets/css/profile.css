@@ -1,0 +1,85 @@
+/* Styling the profile page */
+.profile-content{
+    border: 1px solid silver;
+    width: 90%;
+    background-color: antiquewhite;
+    position: relative;
+    margin-top: 120px;
+    height: 500px;
+    padding: 20px;
+    margin-left: 100px;
+    margin-right: 10px;
+    float: left;
+    
+}
+.profile-content img{
+    height: 200px;
+    width: 200px;
+    margin: 10px 0px 0px 60px;
+}
+.profile-info{
+    border:1px solid silver;
+	position: relative;
+	margin-top: 120px;
+	height: 500px;
+	padding: 20px;
+    background-color: antiquewhite;
+    width: 75%;
+    float: left;
+    margin-left: 150px;
+
+}
+.user-details{
+    margin: 10px 55px;
+}
+#top_links ul li{
+    display: inline;
+}
+#top_links ul li h3{
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+#top_links ul li a{
+    text-decoration: none;
+    padding-right: 30px;
+    color: maroon;
+}
+#top_links ul li:hover a{
+    color: black;
+} 
+
+@media (min-width: 760px) and (max-width: 1024px){
+	
+}
+
+@media screen and (max-width: 760px){
+    .profile-content{
+        width: 90%;
+        margin-left: 0px;
+        height: 520px;
+        margin-top: 160px;
+        margin-right: 0px;
+        padding: 10px;
+
+    }
+    .profile-info{
+        width: 80%;
+        height: 520px;
+        margin-top: 160px;
+        margin-left: 10px;
+        padding: 10px;
+    }
+    .profile-content img{
+        height: 100px;
+        width: 100px;
+        margin: 10px 0px 0px 20px;
+    }
+    .user-details{
+        margin: 10px 5px;
+    }
+    #top_links ul li a {
+        padding-right: 5px;
+    }
+    
+}

@@ -1,0 +1,56 @@
+/* styling the admin page */
+.links label a{
+    color: maroon;
+    text-decoration: none;
+    font-weight: bold;
+}
+.links label:hover a{
+    color: black;
+}
+.info{
+    padding: 5px;
+}
+.info tr td{
+    padding: 6.5px;
+
+}
+.img-info img{
+    width: 400px;
+	height: 400px;
+	float: left;
+	margin-left: 20px;
+	position: relative;
+	border-radius: 5px;
+}
+.admin-content{
+    background-color: white;
+	border: 1px solid silver;
+	padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    width: 480px;
+    height: 450px;
+    margin-left: 5px;
+}
+
+@media (min-width: 760px) and (max-width: 1024px){
+	
+}
+
+@media screen and (max-width: 760px){
+    .img-info img{
+        display: none;
+    }
+    .admin-content{
+        padding: 5px;
+        width: 320px;
+        height: 485px;
+    }
+    .info{
+        padding: 5px;
+    }
+    .info tr td{
+        padding: 7px;
+    
+    }
+}

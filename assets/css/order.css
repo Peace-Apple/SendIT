@@ -1,0 +1,91 @@
+/*Styling the form*/
+.form-content{
+    border: 1px solid silver;
+	background-color: white;
+	width:480px;
+	border-radius: 5px;
+	height: 455px;
+	position: relative;
+	overflow: auto;
+	padding: 17px;
+	float: right;
+    margin: 5px;
+    margin-left: 100px;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+.form-content form table tr td input{
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid maroon;
+    box-shadow: 0 5px 5px 0 rgba(167, 80, 80, 0.16), 0 0 0 1px rgba(167, 80, 80, 0.08);
+}
+.form-content form table tr td h2{
+    color: maroon;
+}
+.form-content form table tr td input[type="number"]{
+    width: 87%;
+}
+.form-content form table tr td input[type="submit"]{
+    background-color: #05386B;
+    color: white;
+    width: 60%;
+    margin-left: 40px;
+}
+.form-content form table tr td input[type="reset"]{
+    background-color: #05386B;
+    color: white;
+    width: 60%;
+    margin-left: 40px;
+}
+.img-order img{
+	width: 400px;
+	height: 400px;
+	float: left;
+	margin-right: 20px;
+	position: relative;
+	border-radius: 5px;
+
+}
+
+@media (min-width: 760px) and (max-width: 1024px){
+	
+}
+
+@media screen and (max-width: 760px){
+	.img-order img{
+        display: none;
+    }
+	.form-content{
+        width: 300px;
+        height: 400px;
+        margin-top: 15px;
+    }
+    .form-content form table tr td h4{
+        font-size: 20px;
+    }
+    .form-content form table tr td input{
+        padding: 9px;
+        margin: 4px;
+    }
+    .form-content form table tr td input[type="submit"]{
+        width: 40%;
+        margin: 10px 0px 0px 105px;
+        padding: 15px;
+    }
+    .form-content form table tr td input[type="text"]{
+        width: 115%;
+    }
+    .form-content form table tr td input[type="number"]{
+        width: 115%;
+    }
+    .form-content form table tr td input[type="reset"]{
+        width: 40%;
+    }
+    .form-content form table tr td input[name="pcode"]{
+        display: none;
+    }
+    .form-content form table tr td input[name="but"]{
+        display: none;
+    }
+}

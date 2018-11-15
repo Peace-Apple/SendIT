@@ -1,0 +1,73 @@
+/* Styling the view orders page */
+.order-content{
+    background-color: white;
+	border: 1px solid silver;
+	padding: 15px;
+    margin-bottom: 15px;
+    width: 500px;
+    margin-left: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+.links label a{
+    color: maroon;
+    text-decoration: none;
+    font-weight: bold;
+}
+.links label:hover a{
+    color: black;
+}
+.detail{
+    padding: 7px;
+}
+.detail tr td{
+    padding: 10px;
+
+}
+.img-detail img{
+    width: 400px;
+	height: 400px;
+	float: left;
+	margin-left: 20px;
+	position: relative;
+	border-radius: 5px;
+}
+.detail-content{
+    background-color: white;
+	border: 1px solid silver;
+	padding: 20px;
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    width: 480px;
+    height: 450px;
+}
+
+@media (min-width: 760px) and (max-width: 1024px){
+	
+}
+
+@media screen and (max-width: 760px){
+    .order-content{
+        margin-left: 0px;
+        width: 130px;
+        margin-bottom: 10px;
+        padding: 13px;
+        font-size: 14px;
+    }
+    .img-detail img{
+        display: none;
+    }
+    .detail-content{
+        width: 295px;
+        height: 400px;
+        padding: 15px;
+    }
+    .detail{
+        padding: 2px;
+    }
+    .detail tr td{
+        padding-left: 0px;
+    
+    }
+}
