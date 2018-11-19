@@ -1,5 +1,5 @@
 from api.models.user_model import Users
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Authenticate:
@@ -18,3 +18,14 @@ class Authenticate:
 
         except ValueError:
             return False
+
+    @staticmethod
+    def verify_password(password_text, hashed):
+        """
+        verify client password with stored password
+        :param password_text:
+        :param hashed:
+        :return:
+        """
+
+        return check_password_hash(hashed, password_text)
