@@ -61,6 +61,20 @@ class DatabaseConnection:
             if self.connection is not None:
                 self.connection.close()
 
+    def insert_user(self, user_name, email, phone_number, password):
+        """
+        insert user details into the database table users
+        :param user_name:
+        :param email:
+        :param phone_number:
+        :param password:
+        :return:
+        """
+        add_user = """INSERT INTO users (user_name, email, phone_number, password)
+                   VALUES ('{0}', '{1}', '{2}', '{3}');""".format(user_name, email, phone_number, password)
+        self.cursor.execute(add_user)
+        return True
+
 
 DatabaseConnection().create_tables()
 
