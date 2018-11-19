@@ -98,6 +98,22 @@ class DatabaseConnection:
         check_email = self.cursor.fetchone()
         return check_email
 
+    def insert_parcel(self, receivers_name, pickup_location, destination,  weight, user_id):
+        """
+        insert order details into the table orders
+        :param receivers_name:
+        :param pickup_location:
+        :param destination:
+        :param weight
+        :param user_id:
+        :return:
+        """
+        add_parcel = """INSERT INTO parcels (receivers_name, pickup_location, destination, weight, user_id)
+                    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(receivers_name, pickup_location, destination,
+                                                                          weight, user_id)
+        self.cursor.execute(add_parcel)
+        return True
+
 
 DatabaseConnection().create_tables()
 
