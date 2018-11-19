@@ -116,13 +116,24 @@ class DatabaseConnection:
 
     def get_all_parcel_orders(self):
         """
-        get all orders from the orders table
+        get all orders from the parcels table
         :return:
         """
         all_orders = "SELECT * FROM parcels;"
         self.cursor.execute(all_orders)
         parcels = self.cursor.fetchall()
         return parcels
+
+    def get_one_parcel_order(self, parcel_id):
+        """
+        get a specific order from the parcels table using the parcel_id
+        :param parcel_id:
+        :return:
+        """
+        one = """SELECT * FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
+        self.cursor.execute(one)
+        parcel = self.cursor.fetchone()
+        return parcel
 
     def check_admin(self):
         """
