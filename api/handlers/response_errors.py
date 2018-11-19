@@ -152,4 +152,12 @@ class ResponseErrors:
             "data": request.get_json()
                    }), 400
 
+    @staticmethod
+    def permission_denied():
+        response_object = {
+            'status': 'fail',
+            'message': 'Permission denied, Please Login as a user'
+        }
+        return jsonify(response_object), 403
+
 
