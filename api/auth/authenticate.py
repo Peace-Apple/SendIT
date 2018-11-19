@@ -1,5 +1,5 @@
 from api.models.user_model import Users
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 
 class Authenticate:
