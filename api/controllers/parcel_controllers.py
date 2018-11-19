@@ -81,7 +81,7 @@ class ParcelController(MethodView):
         if user_type == "TRUE" and user_id:
 
             if parcel_id:
-                return self.get_single(parcel_id)
+                return self.get_single_order(parcel_id)
 
             all_orders = self.data.get_all_parcel_orders()
 
@@ -97,21 +97,32 @@ class ParcelController(MethodView):
 
         return ResponseErrors.denied_permission()
 
+    @jwt_required
     def get_single_order(self, parcel_id):
         """
         Method to return a single parcel delivery order
         :param parcel_id:
         :return:
         """
-        orders = self.order_data.get_all_orders()
-        for single_order in orders:
-            if parcel_id == single_order['parcel_id']:
+        user = get_jwt_identity()
+        user_type = user[4]
+        user_id = user[0]
+
+        if user_id and user_type == "TRUE":
+
+            single_order = self.data.get_one_parcel_order(parcel_id)
+
+            if isinstance(single_order, object):
                 response_object = {
-                    'message': 'Successfully got one parcel delivery order',
+                    'msg': 'Successfully got one parcel delivery order',
                     'data': single_order
                 }
                 return jsonify(response_object), 200
-        return ResponseErrors.parcel_order_absent()
+
+            else:
+                return ResponseErrors.parcel_order_absent()
+
+        return ResponseErrors.denied_permission()
 
     def get_specific_user(self, user_id):
         """
