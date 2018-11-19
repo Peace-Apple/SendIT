@@ -26,8 +26,8 @@ class Routes:
                          methods=['POST'], strict_slashes=False)
         app.add_url_rule('/api/v2/parcels/', view_func=ParcelController.as_view('get_all_parcel_delivery_orders'),
                          methods=['GET'], strict_slashes=False)
-        # app.add_url_rule('/api/v2/parcels/<int:parcel_id>', view_func=ParcelController.as_view('get_one_order'),
-        #                  methods=['GET'], strict_slashes=False)
+        app.add_url_rule('/api/v2/parcels/<int:parcel_id>', view_func=ParcelController.as_view('get_one_parcel_order'),
+                         methods=['GET'], strict_slashes=False)
         # app.add_url_rule('/api/v2/users/<int:user_id>/parcels/', view_func=ParcelController.as_view
         #                 ('get_user_parcels'),
         #                  methods=['GET'], strict_slashes=False)
