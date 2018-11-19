@@ -75,6 +75,19 @@ class DatabaseConnection:
         self.cursor.execute(add_user)
         return True
 
+    def find_user_by_username(self, user_name):
+        """
+        find a specific user given a user name
+        :return:
+        :param user_name:
+        :return:
+        """
+
+        name = "SELECT * FROM users WHERE user_name ='{}'".format(user_name)
+        self.cursor.execute(name)
+        check_username = self.cursor.fetchone()
+        return check_username
+
 
 DatabaseConnection().create_tables()
 
