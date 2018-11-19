@@ -5,7 +5,6 @@ import datetime
 
 from flask import request, jsonify
 from flask.views import MethodView
-from api.utils.validations import DataValidation
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authenticate import Authenticate
 from api.models.database import DatabaseConnection
@@ -17,7 +16,6 @@ class LoginController(MethodView):
     User login class
     """
     data = DatabaseConnection()
-    val = DataValidation()
     auth = Authenticate()
 
     def post(self):
@@ -44,7 +42,7 @@ class LoginController(MethodView):
             response_object = {
                 'status': 'success',
                 'message': 'You are logged in',
-                "access_token": create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=3600)),
+                'access_token': create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=3600)),
                 'logged_in_as': str(user[1])
                 }
 
