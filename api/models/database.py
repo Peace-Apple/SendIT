@@ -114,6 +114,16 @@ class DatabaseConnection:
         self.cursor.execute(add_parcel)
         return True
 
+    def get_all_parcel_orders(self):
+        """
+        get all orders from the orders table
+        :return:
+        """
+        all_orders = "SELECT * FROM parcels;"
+        self.cursor.execute(all_orders)
+        parcels = self.cursor.fetchall()
+        return parcels
+
 
 DatabaseConnection().create_tables()
 
