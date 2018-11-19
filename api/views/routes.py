@@ -1,7 +1,8 @@
 """
 Module to handle url requests
 """
-from api.controllers.parcel_controllers import ParcelController
+from api.controllers.signup_controllers import SignupController
+from api.controllers.login_controllers import LoginController
 
 
 class Routes:
@@ -16,6 +17,10 @@ class Routes:
         :param app:
         :return:
         """
+        app.add_url_rule('/api/v1/auth/signup', view_func=SignupController.as_view('register_user'),
+                         methods=['POST'], strict_slashes=False)
+        app.add_url_rule('/api/v1/auth/login', view_func=LoginController.as_view('login_user'),
+                         methods=['POST'], strict_slashes=False)
         app.add_url_rule('/api/v1/parcels/', view_func=ParcelController.as_view('make_delivery_order'),
                          methods=['POST'], strict_slashes=False)
         app.add_url_rule('/api/v1/parcels/', view_func=ParcelController.as_view('get_all_orders'),
