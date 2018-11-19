@@ -4,10 +4,13 @@ app root of the api endpoints. this module runs the application
 
 from flask import Flask
 from api.views.routes import Routes
+from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.env = 'development'
 Routes.generate(app)
+app.config['JWT_SECRET_KEY'] = 'apple123'
+jwt = JWTManager(app)
 
 
 @app.route('/')
