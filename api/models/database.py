@@ -1,5 +1,5 @@
 """
-Module to handle connection to the database, creation of tables, queries to the database and data storage
+Module to handle connection to the database, creation of tables, queries to the database and data storage.
 """
 
 import psycopg2
