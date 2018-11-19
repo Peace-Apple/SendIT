@@ -160,4 +160,20 @@ class ResponseErrors:
         }
         return jsonify(response_object), 403
 
+    @staticmethod
+    def no_items(item):
+        response_object = {
+            'status': 'fail',
+            'message': 'No {} items currently'.format(item)
+        }
+        return jsonify(response_object), 200
+
+    @staticmethod
+    def denied_permission():
+        response_object = {
+            'status': 'fail',
+            'message': 'Permission denied, Please Login as Admin'
+        }
+        return jsonify(response_object), 403
+
 
