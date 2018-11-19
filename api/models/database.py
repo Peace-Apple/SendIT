@@ -78,7 +78,6 @@ class DatabaseConnection:
     def find_user_by_username(self, user_name):
         """
         find a specific user given a user name
-        :return:
         :param user_name:
         :return:
         """
