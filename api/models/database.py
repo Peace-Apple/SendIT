@@ -87,6 +87,17 @@ class DatabaseConnection:
         check_username = self.cursor.fetchone()
         return check_username
 
+    def find_user_by_email(self, email):
+        """
+        find a specific user given an email
+        :param email:
+        :return:
+        """
+        email = "SELECT * FROM users WHERE email = '{}'".format(email)
+        self.cursor.execute(email)
+        check_email = self.cursor.fetchone()
+        return check_email
+
 
 DatabaseConnection().create_tables()
 
