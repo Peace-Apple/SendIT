@@ -176,4 +176,11 @@ class ResponseErrors:
         }
         return jsonify(response_object), 403
 
+    @staticmethod
+    def delivery_status_not_found(delivery_status):
+        return jsonify({
+            "status": "fail",
+            "error_message": "Delivery status {} not found".format(delivery_status),
+        }), 404
+
 
