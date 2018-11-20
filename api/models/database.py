@@ -146,6 +146,38 @@ class DatabaseConnection:
         get_parcels = self.cursor.fetchall()
         return get_parcels
 
+    def update_destination(self, destination,  parcel_id):
+        """
+        update the destination of a given parcel
+        :param destination:
+        :param parcel_id:
+        :return:
+        """
+        update = """UPDATE parcels SET destination = '{}' WHERE parcel_id = '{}';""".format(destination, parcel_id)
+        self.cursor.execute(update)
+
+    def update_delivery_status(self, delivery_status,  parcel_id):
+        """
+        update the delivery status of a given parcel delivery order
+        :param delivery_status:
+        :param parcel_id:
+        :return:
+        """
+        update = """UPDATE parcels SET delivery_status = '{}' WHERE parcel_id = '{}';""".format(delivery_status,
+                                                                                                parcel_id)
+        self.cursor.execute(update)
+
+    def update_present_location(self, present_location,  parcel_id):
+        """
+        update the present location of a parcel delivery order
+        :param present_location:
+        :param parcel_id:
+        :return:
+        """
+        update = """UPDATE parcels SET present_location = '{}' WHERE parcel_id = '{}';""".format(present_location,
+                                                                                                 parcel_id)
+        self.cursor.execute(update)
+
     def check_admin(self):
         """
         method to set user_type to true which gives a user admin privileges
