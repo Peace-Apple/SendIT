@@ -116,10 +116,3 @@ class LoginController(MethodView):
             return ResponseErrors.no_items('order')
 
         return ResponseErrors.denied_permission()
-
-
-
-
-
-
-
