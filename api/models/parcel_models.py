@@ -2,7 +2,6 @@
 Module to handle data storage
 """
 import datetime
-from flask import jsonify
 from api.models.database import DatabaseConnection
 
 
@@ -41,25 +40,3 @@ class Orders:
         current_order = self.data.insert_parcel(receivers_name, pickup_location, destination, weight, user_id)
 
         return current_order
-
-    def get_all_orders(self):
-        return self.orders
-
-    def get_one_order(self, parcel_id):
-        for order in self.orders:
-            if parcel_id == order['parcel_id']:
-                return order
-            return None
-
-    def update_delivery_status(self, parcel_id, delivery_status=None):
-        order = self.get_one_order(parcel_id)
-        if not order:
-            return False
-        order['delivery_status'] = delivery_status
-        response_object = {
-            'message': 'Parcel delivery order has been canceled successfully'
-        }
-        return jsonify(response_object), 202
-
-    orders = []
-
