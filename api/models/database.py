@@ -135,6 +135,17 @@ class DatabaseConnection:
         parcel = self.cursor.fetchone()
         return parcel
 
+    def get_specific_user_parcels(self, user_id):
+        """
+        get the order history for a user from the orders table using the user_id
+        :param user_id:
+        :return:
+        """
+        user_parcels = """SELECT * FROM parcels WHERE user_id ='{}';""".format(user_id)
+        self.cursor.execute(user_parcels)
+        get_parcels = self.cursor.fetchall()
+        return get_parcels
+
     def check_admin(self):
         """
         method to set user_type to true which gives a user admin privileges
