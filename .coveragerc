@@ -18,5 +18,11 @@ omit =
        */api\views\__init__.py
        */run.py
        */response_errors.py
+       */authenticate.py
+       */database.py
+       */user_model.py
+       */parcel_models.py
+       */parcel_controllers.py
+
 
 
