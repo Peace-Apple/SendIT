@@ -8,7 +8,7 @@ from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authenticate import Authenticate
 from api.models.database import DatabaseConnection
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 class LoginController(MethodView):
@@ -54,6 +54,29 @@ class LoginController(MethodView):
                 'message': 'User does not exist.'
             }
             return jsonify(response_object), 404
+
+    @jwt_required
+    def get(self, user_id):
+        """
+        Method to return a single users parcel orders
+        :return:
+        """
+        user = get_jwt_identity()
+        user_type = user[4]
+        user_id = user[0]
+
+        if user_id and user_type == "FALSE":
+            my_parcels = self.data.get_specific_user_parcels(user_id)
+            if isinstance(my_parcels, object):
+
+                response_object = {
+                    "msg": "Successfully got all orders belonging to user",
+                    "data": my_parcels
+                }
+                return jsonify(response_object), 200
+            else:
+                return ResponseErrors.no_items('order')
+        return ResponseErrors.permission_denied()
 
 
 
