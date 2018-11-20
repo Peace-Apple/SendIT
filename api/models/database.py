@@ -187,4 +187,3 @@ class DatabaseConnection:
 
 
 DatabaseConnection().create_tables()
-
