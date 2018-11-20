@@ -124,31 +124,6 @@ class ParcelController(MethodView):
 
         return ResponseErrors.denied_permission()
 
-    def put(self, parcel_id):
-        """
-        method to make changes to the delivery status and cancel it
-        :param parcel_id:
-        :return:
-        """
-        order = self.order_data.get_one_order(parcel_id)
 
-        post_data = request.get_json()
-        key = 'delivery_status'
-        if key not in post_data:
-            return ResponseErrors.missing_key(key)
-        try:
-            self.delivery_status = post_data['delivery_status'].strip()
-        except AttributeError:
-            return ResponseErrors.invalid_data_format()
-
-        if not self.delivery_status:
-            return ResponseErrors.empty_data_fields()
-        elif DataValidation.check_string_of_numbers(self.delivery_status):
-            return ResponseErrors.invalid_data_format()
-
-        if not order:
-            return ResponseErrors.order_absent()
-
-        return self.order_data.update_delivery_status(parcel_id, self.delivery_status)
 
 
