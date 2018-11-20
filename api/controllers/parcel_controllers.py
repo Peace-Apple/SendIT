@@ -166,6 +166,45 @@ class ParcelController(MethodView):
 
         return ResponseErrors.denied_permission()
 
+    @jwt_required
+    def put(self, parcel_id):
+        """
+        Method to update the present location of a parcel delivery order
+        :param parcel_id:
+        :return:
+        """
+        user = get_jwt_identity()
+        user_type = user[4]
+        user_id = user[0]
+
+        if user_type == "TRUE" and user_id:
+
+            post_data = request.get_json()
+
+            key = "present_location"
+
+            if key not in post_data:
+                return ResponseErrors.missing_fields(key)
+            try:
+                present_location = post_data['present_location'].strip()
+            except AttributeError:
+                return ResponseErrors.invalid_data_format()
+
+            if present_location:
+                if self.data.get_one_parcel_order(parcel_id):
+
+                    updated_location = self.data.update_present_location(present_location, parcel_id)
+                    if isinstance(updated_location, object):
+                        response_object = {
+                            'message': 'Location has been updated successfully'
+
+                        }
+                        return jsonify(response_object), 202
+
+                return ResponseErrors.no_items('order')
+
+        return ResponseErrors.denied_permission()
+
 
 
 
