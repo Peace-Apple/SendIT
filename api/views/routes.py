@@ -43,5 +43,3 @@ class Routes:
         app.add_url_rule('/api/v2/parcels/<int:parcel_id>/presentLocation/',
                          view_func=ParcelController.as_view('update_present_location'),
                          methods=['PUT'], strict_slashes=False)
-
-
