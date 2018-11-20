@@ -124,27 +124,6 @@ class ParcelController(MethodView):
 
         return ResponseErrors.denied_permission()
 
-    def get_specific_user(self, user_id):
-        """
-        Method to return a single users parcel orders
-        :param user_id:
-        :return:
-        """
-        orders = self.order_data.get_all_orders()
-        user_orders = []
-
-        for order in orders:
-            if user_id == order['user_id']:
-                for parcel in orders:
-                    if user_id == parcel['user_id']:
-                        user_orders.append(parcel)
-                response_object = {
-                    'message': 'Successfully got all orders belonging to user',
-                    'data': user_orders
-                }
-                return jsonify(response_object), 200
-            return ResponseErrors.user_absent()
-
     def put(self, parcel_id):
         """
         method to make changes to the delivery status and cancel it
