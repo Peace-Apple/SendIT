@@ -8,6 +8,7 @@ from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authenticate import Authenticate
 from api.models.database import DatabaseConnection
+from api.models.parcel_models import Orders
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
@@ -17,6 +18,7 @@ class LoginController(MethodView):
     """
     data = DatabaseConnection()
     auth = Authenticate()
+    order = Orders()
 
     def post(self):
         # to get post data
@@ -89,68 +91,32 @@ class LoginController(MethodView):
         user_type = user[4]
         user_id = user[0]
 
-        if user_id and user_type == "FALSE":
+        if user_type == "TRUE" and user_id:
 
             post_data = request.get_json()
 
-            key = "destination"
-            print(request.get_json())
+            key = "delivery_status"
 
             if key not in post_data:
                 return ResponseErrors.missing_fields(key)
             try:
-                destination = post_data['destination'].strip()
-            except AttributeError:
-                    return ResponseErrors.invalid_data_format()
-
-            updated_order = self.data.update_destination(destination, parcel_id)
-            if isinstance(updated_order, object):
-                response_object = {
-                    'message': 'Destination has been updated successfully'
-
-                }
-                return jsonify(response_object), 202
-
-            return ResponseErrors.no_items('order')
-
-        return ResponseErrors.permission_denied()
-
-    @jwt_required
-    def put(self, parcel_id):
-        """
-        Method for user to change the destination of a parcel delivery order
-        :param parcel_id:
-        :return:
-        """
-        user = get_jwt_identity()
-        user_type = user[4]
-        user_id = user[0]
-
-        if user_id and user_type == "FALSE":
-
-            post_data = request.get_json()
-
-            key = "destination"
-            print(request.get_json())
-
-            if key not in post_data:
-                return ResponseErrors.missing_fields(key)
-            try:
-                destination = post_data['destination'].strip()
+                delivery_status = post_data['delivery_status'].strip()
             except AttributeError:
                 return ResponseErrors.invalid_data_format()
 
-            updated_order = self.data.update_destination(destination, parcel_id)
-            if isinstance(updated_order, object):
-                response_object = {
-                    'message': 'Destination has been updated successfully'
+            if self.data.get_one_parcel_order(parcel_id):
 
-                }
-                return jsonify(response_object), 202
+                updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
+                if isinstance(updated_status, object):
+                    response_object = {
+                        'message': 'Destination has been updated successfully'
+                    }
+                    return jsonify(response_object), 202
 
             return ResponseErrors.no_items('order')
 
-        return ResponseErrors.permission_denied()
+        return ResponseErrors.denied_permission()
+
 
 
 
