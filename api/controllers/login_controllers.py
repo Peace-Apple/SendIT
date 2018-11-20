@@ -115,6 +115,44 @@ class LoginController(MethodView):
 
         return ResponseErrors.permission_denied()
 
+    @jwt_required
+    def put(self, parcel_id):
+        """
+        Method for user to change the destination of a parcel delivery order
+        :param parcel_id:
+        :return:
+        """
+        user = get_jwt_identity()
+        user_type = user[4]
+        user_id = user[0]
+
+        if user_id and user_type == "FALSE":
+
+            post_data = request.get_json()
+
+            key = "destination"
+            print(request.get_json())
+
+            if key not in post_data:
+                return ResponseErrors.missing_fields(key)
+            try:
+                destination = post_data['destination'].strip()
+            except AttributeError:
+                return ResponseErrors.invalid_data_format()
+
+            updated_order = self.data.update_destination(destination, parcel_id)
+            if isinstance(updated_order, object):
+                response_object = {
+                    'message': 'Destination has been updated successfully'
+
+                }
+                return jsonify(response_object), 202
+
+            return ResponseErrors.no_items('order')
+
+        return ResponseErrors.permission_denied()
+
+
 
 
 
