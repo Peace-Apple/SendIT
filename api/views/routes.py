@@ -39,6 +39,6 @@ class Routes:
                          methods=['PUT'], strict_slashes=False)
         app.add_url_rule('/api/v2/parcels/<int:parcel_id>/presentLocation/',
                          view_func=LoginController.as_view('update_present_location'),
-                         methods=['PUT'], strict_slashes=Fals)
+                         methods=['PUT'], strict_slashes=False)
 
 
