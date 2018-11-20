@@ -26,15 +26,6 @@ class ResponseErrors:
         }
         return jsonify(response_object), 400
 
-    # @staticmethod
-    # def invalid_data_type():
-    #     response_object = {
-    #         'status': 'fail',
-    #         'error_message': 'Wrong data type, please use a number',
-    #         'data': False
-    #     }
-    #     return jsonify(response_object), 400
-
     @staticmethod
     def empty_data_fields():
         response_object = {
@@ -60,7 +51,7 @@ class ResponseErrors:
             'message': 'No parcel delivery orders currently',
             'data': False
         }
-        return jsonify(response_object), 200
+        return jsonify(response_object), 404
 
     @staticmethod
     def parcel_order_absent():
@@ -69,7 +60,7 @@ class ResponseErrors:
             'error_message': 'Parcel order does not exist',
             'data': False
         }
-        return jsonify(response_object), 400
+        return jsonify(response_object), 404
 
     @staticmethod
     def user_absent():
@@ -78,7 +69,7 @@ class ResponseErrors:
             'error_message': 'User does not exist',
             'data': False
         }
-        return jsonify(response_object), 400
+        return jsonify(response_object), 404
 
     @staticmethod
     def order_absent():
@@ -87,7 +78,7 @@ class ResponseErrors:
             'error_message': 'Order does not exist',
             'data': False
         }
-        return jsonify(response_object), 400
+        return jsonify(response_object), 404
 
     @staticmethod
     def negative_number():
@@ -182,5 +173,3 @@ class ResponseErrors:
             "status": "fail",
             "error_message": "Delivery status {} not found".format(delivery_status),
         }), 404
-
-
