@@ -31,6 +31,9 @@ class Routes:
         app.add_url_rule('/api/v2/users/<int:user_id>/parcels/',
                          view_func=LoginController.as_view('get_specific_user_parcels'),
                          methods=['GET'], strict_slashes=False)
+        app.add_url_rule('/api/v2/parcels/<int:parcel_id>/cancel/',
+                         view_func=LoginController.as_view('cancel_delivery_order'),
+                         methods=['PUT'], strict_slashes=False)
         app.add_url_rule('/api/v2/parcels/<int:parcel_id>/destination/',
                          view_func=LoginController.as_view('update_destination'),
                          methods=['PUT'], strict_slashes=False)
