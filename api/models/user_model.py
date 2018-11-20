@@ -48,7 +48,3 @@ class Users:
         del user.user_id
 
         return user
-
-
-
-
