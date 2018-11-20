@@ -1,9 +1,5 @@
 ## SENDIT
-#### Travis-Badge
 
-#### Coveralls-Badge
-
-#### Codeclimate-Badge
 
 ### About
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIT
