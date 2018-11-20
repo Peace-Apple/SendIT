@@ -124,6 +124,48 @@ class ParcelController(MethodView):
 
         return ResponseErrors.denied_permission()
 
+    @jwt_required
+    def put(self, parcel_id):
+        """
+        Method to update the parcel delivery status
+        :param parcel_id:
+        :return:
+        """
+        user = get_jwt_identity()
+        user_type = user[4]
+        user_id = user[0]
+
+        if user_type == "TRUE" and user_id:
+
+            post_data = request.get_json()
+
+            key = "delivery_status"
+
+            status = ['inTransit', 'cancelled', 'completed']
+
+            if key not in post_data:
+                return ResponseErrors.missing_fields(key)
+            try:
+                delivery_status = post_data['delivery_status'].strip()
+            except AttributeError:
+                return ResponseErrors.invalid_data_format()
+
+            if delivery_status not in status:
+                return ResponseErrors.delivery_status_not_found(delivery_status)
+            if self.data.get_one_parcel_order(parcel_id):
+
+                updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
+                if isinstance(updated_status, object):
+                    response_object = {
+                        'message': 'Status has been updated successfully'
+
+                    }
+                    return jsonify(response_object), 202
+
+            return ResponseErrors.no_items('order')
+
+        return ResponseErrors.denied_permission()
+
 
 
 
