@@ -1,5 +1,5 @@
 ## SENDIT
-
+[![Build Status](https://travis-ci.org/Peace-Apple/SendIT.svg?branch=develop)](https://travis-ci.org/Peace-Apple/SendIT)
 
 ### About
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIT
