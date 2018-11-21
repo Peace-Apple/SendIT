@@ -83,7 +83,7 @@ class LoginController(MethodView):
     @jwt_required
     def put(self, parcel_id):
         """
-        Method for user to change the destination of a parcel delivery order
+        Method for user to cancel a parcel delivery order
         :param parcel_id:
         :return:
         """
@@ -97,19 +97,23 @@ class LoginController(MethodView):
 
             key = "delivery_status"
 
+            status = ['cancelled']
+
             if key not in post_data:
                 return ResponseErrors.missing_fields(key)
             try:
                 delivery_status = post_data['delivery_status'].strip()
             except AttributeError:
                 return ResponseErrors.invalid_data_format()
+            if delivery_status not in status:
+                return ResponseErrors.delivery_status_not_found(delivery_status)
 
             if self.data.get_one_parcel_order(parcel_id):
 
                 updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
-                        'message': 'Destination has been updated successfully'
+                        'message': 'Parcel delivery order has been cancelled successfully'
                     }
                     return jsonify(response_object), 202
 
