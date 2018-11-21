@@ -91,7 +91,7 @@ class LoginController(MethodView):
         user_type = user[4]
         user_id = user[0]
 
-        if user_type == "TRUE" and user_id:
+        if user_type == "FALSE" and user_id:
 
             post_data = request.get_json()
 
@@ -119,4 +119,4 @@ class LoginController(MethodView):
 
             return ResponseErrors.no_items('order')
 
-        return ResponseErrors.denied_permission()
+        return ResponseErrors.permission_denied()
