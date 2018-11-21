@@ -167,6 +167,17 @@ class DatabaseConnection:
                                                                                                 parcel_id)
         self.cursor.execute(update)
 
+    def cancel_delivery_order(self, delivery_status, parcel_id):
+        """
+        update the delivery status of a given parcel delivery order
+        :param delivery_status:
+        :param parcel_id:
+        :return:
+        """
+        update = """UPDATE parcels SET delivery_status = '{}' WHERE parcel_id = '{}';""".format(delivery_status,
+                                                                                                parcel_id)
+        self.cursor.execute(update)
+
     def update_present_location(self, present_location,  parcel_id):
         """
         update the present location of a parcel delivery order
