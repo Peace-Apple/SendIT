@@ -1,5 +1,7 @@
 ## SENDIT
 [![Build Status](https://travis-ci.org/Peace-Apple/SendIT.svg?branch=develop)](https://travis-ci.org/Peace-Apple/SendIT)
+[![Coverage Status](https://coveralls.io/repos/github/Peace-Apple/SendIT/badge.svg?branch=ft-challenge-two)](https://coveralls.io/github/Peace-Apple/SendIT?branch=ft-challenge-two)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1c2a090696fb6dbedf32/maintainability)](https://codeclimate.com/github/Peace-Apple/SendIT/maintainability)
 
 ### About
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIT
