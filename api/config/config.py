@@ -29,4 +29,3 @@ class TestingConfig(Config):
     DEBUG = True
     TESTING = True
     SECRET_KEY = 'apple123'
-
