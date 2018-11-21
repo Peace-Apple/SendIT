@@ -125,10 +125,9 @@ class ParcelController(MethodView):
         return ResponseErrors.denied_permission()
 
     @jwt_required
-    def put(self, destination=None, parcel_id=None):
+    def put(self, parcel_id):
         """
         Method to update the parcel delivery status
-        :param destination:
         :param parcel_id:
         :return:
         """
@@ -138,74 +137,47 @@ class ParcelController(MethodView):
 
         if user_type == "TRUE" and user_id:
 
-            if destination:
-                return self.update_destination(destination, parcel_id)
-
             post_data = request.get_json()
 
             key = "delivery_status"
+            key1 = "present_location"
 
-            status = ['inTransit', 'cancelled', 'completed']
-
-            if key not in post_data:
-                return ResponseErrors.missing_fields(key)
-            try:
-                delivery_status = post_data['delivery_status'].strip()
-            except AttributeError:
-                return ResponseErrors.invalid_data_format()
-
-            if delivery_status not in status:
-                return ResponseErrors.delivery_status_not_found(delivery_status)
-            if self.data.get_one_parcel_order(parcel_id):
-
-                updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
-                if isinstance(updated_status, object):
-                    response_object = {
-                        'message': 'Status has been updated successfully'
-
-                    }
-                    return jsonify(response_object), 202
-
-            return ResponseErrors.no_items('order')
+            status = ['inTransit', 'completed']
+            if key1 in post_data:
+                return self.update_present_location(post_data['present_location'], parcel_id)
+            elif key in post_data:
+                try:
+                    delivery_status = post_data['delivery_status'].strip()
+                except AttributeError:
+                    return ResponseErrors.invalid_data_format()
+                if delivery_status not in status:
+                    return ResponseErrors.delivery_status_not_found(delivery_status)
+                if delivery_status:
+                    updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
+                    if isinstance(updated_status, object):
+                        response_object = {
+                            'message': 'Status has been updated successfully'
+                        }
+                        return jsonify(response_object), 202
+                return jsonify({'error': 'Please input a status'}), 400
 
         return ResponseErrors.denied_permission()
 
-    @jwt_required
-    def update_destination(self, destination, parcel_id):
+    def update_present_location(self, present_location, parcel_id):
         """
         Method to update the destination of a parcel delivery order
-        :param destination:
+        :param present_location:
         :param parcel_id:
         :return:
         """
-        user = get_jwt_identity()
-        user_type = user[4]
-        user_id = user[0]
-        self.destination = destination
+        if self.data.get_one_parcel_order(parcel_id):
 
-        if user_type == "FALSE" and user_id:
+            updated_location = self.data.update_present_location(present_location, parcel_id)
+            if isinstance(updated_location, object):
+                response_object = {
+                    'message': 'Present location has been updated successfully'
 
-            post_data = request.get_json()
+                }
+                return jsonify(response_object), 202
 
-            key = "destination"
-
-            if key not in post_data:
-                return ResponseErrors.missing_fields(key)
-            try:
-                self.destination = post_data['destination'].strip()
-            except AttributeError:
-                return ResponseErrors.invalid_data_format()
-
-            if self.data.get_one_parcel_order(parcel_id):
-
-                updated_status = self.data.update_destination(destination, parcel_id)
-                if isinstance(updated_status, object):
-                    response_object = {
-                        'message': 'Status has been updated successfully'
-
-                    }
-                    return jsonify(response_object), 202
-
-            return ResponseErrors.no_items('order')
-
-        return ResponseErrors.denied_permission()
+        return ResponseErrors.no_items('order')
