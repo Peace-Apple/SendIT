@@ -192,7 +192,7 @@ class DatabaseConnection:
 
     def check_admin(self):
         """
-        method to set user_type to true which gives a user admin privileges
+        method to set user_type to true which gives a user admin privileges.
         :return:
         """
         self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 1")
