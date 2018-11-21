@@ -110,7 +110,7 @@ class LoginController(MethodView):
 
             if self.data.get_one_parcel_order(parcel_id):
 
-                updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
+                updated_status = self.data.cancel_delivery_order(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
                         'message': 'Parcel delivery order has been cancelled successfully'
