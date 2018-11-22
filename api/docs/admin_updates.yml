@@ -1,7 +1,7 @@
 Admin updates
 ---
 tags:
-  - Updates(Admin routes)
+  - Updates (Admin routes)
 parameters:
   - name: Authorization
     in: header
