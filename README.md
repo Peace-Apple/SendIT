@@ -8,12 +8,12 @@ SendIT is a courier service that helps users deliver parcels to different destin
 provides courier quotes based on weight categories.
 
 ### Features
-a. The user can create user accounts and can sign in to the app.
-b. The user can change the destination of a parcel delivery order.
-c. The user can view all parcel delivery orders he/she has created.
-d. Admin can view all parcel delivery orders in the application.
-e. Admin can change the status of a parcel delivery order.
-f. Admin can change the present location of a parcel delivery order
+- The user can create user accounts and can sign in to the app.
+- The user can change the destination of a parcel delivery order.
+- The user can view all parcel delivery orders he/she has created.
+- Admin can view all parcel delivery orders in the application.
+- Admin can change the status of a parcel delivery order.
+- Admin can change the present location of a parcel delivery order
 
 ### Links
 
