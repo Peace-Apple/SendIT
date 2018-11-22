@@ -144,6 +144,14 @@ class ResponseErrors:
                    }), 400
 
     @staticmethod
+    def invalid_input():
+        return jsonify({
+            "status": "fail",
+            "error_message": "The input here should be a string of characters",
+            "data": request.get_json()
+                   }), 400
+
+    @staticmethod
     def permission_denied():
         response_object = {
             'status': 'fail',
@@ -171,7 +179,7 @@ class ResponseErrors:
     def delivery_status_not_found(delivery_status):
         return jsonify({
             "status": "fail",
-            "error_message": "Delivery status {} not found".format(delivery_status),
+            "error_message": "Delivery status {} not found, only use cancelled as the value".format(delivery_status),
         }), 404
 
     @staticmethod
