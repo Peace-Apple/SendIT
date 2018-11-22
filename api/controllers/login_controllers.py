@@ -11,6 +11,7 @@ from api.models.database import DatabaseConnection
 from api.models.parcel_models import Orders
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from api.utils.validations import DataValidation
+from flasgger import swag_from
 
 
 class LoginController(MethodView):
@@ -22,6 +23,7 @@ class LoginController(MethodView):
     auth = Authenticate()
     order = Orders()
 
+    @swag_from('../docs/login.yml')
     def post(self):
         # to get post data
         post_data = request.get_json()

@@ -6,8 +6,10 @@ from flask import Flask
 from api.views.routes import Routes
 from flask_jwt_extended import JWTManager
 from api.models.database import DatabaseConnection
+from flasgger import Swagger
 
 app = Flask(__name__)
+Swagger(app)
 app.env = 'development'
 Routes.generate(app)
 app.config['JWT_SECRET_KEY'] = 'apple123'

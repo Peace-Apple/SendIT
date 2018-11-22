@@ -7,6 +7,7 @@ from api.handlers.response_errors import ResponseErrors
 from api.models.user_model import UserModel
 from api.utils.validations import DataValidation
 from api.auth.authenticate import Authenticate
+from flasgger import swag_from
 
 
 class SignupController(MethodView):
@@ -16,6 +17,7 @@ class SignupController(MethodView):
     myUser = UserModel()
     val = DataValidation()
 
+    @swag_from('../docs/signup.yml')
     def post(self):
 
         post_data = request.get_json()
