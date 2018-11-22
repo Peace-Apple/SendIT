@@ -23,6 +23,7 @@ omit =
        */user_model.py
        */parcel_models.py
        */parcel_controllers.py
+       */login_controllers.py
 
 
 
