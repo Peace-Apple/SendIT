@@ -1,7 +1,7 @@
 Get Parcels
 ---
 tags:
-  - Parcels (Admin routes)
+  - Parcels(Admin routes)
 parameters:
   - name: Authorization
     in: header
@@ -13,7 +13,7 @@ parameters:
     description: This route is required for getting a single parcel
 responses:
   200:
-    description: All parcels obtained
+    description: Successful
 security:
   - JWT:
     description: Pass in jwt token i.e Bearer <jwt>
