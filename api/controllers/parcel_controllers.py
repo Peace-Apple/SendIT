@@ -3,7 +3,7 @@ Module to handle any logic
 """
 from flask import request, jsonify
 from flask.views import MethodView
-from api.models.parcel_models import Orders
+from api.models.parcel_models import ParcelModel
 from api.handlers.response_errors import ResponseErrors
 from api.utils.validations import DataValidation
 from api.models.database import DatabaseConnection
@@ -20,7 +20,7 @@ class ParcelController(MethodView):
     destination = None
     weight = None
     val = DataValidation()
-    order_data = Orders()
+    order_data = ParcelModel()
     data = DatabaseConnection()
 
     @jwt_required
@@ -89,7 +89,8 @@ class ParcelController(MethodView):
             all_orders = self.data.get_all_parcel_orders()
 
             if isinstance(all_orders, object):
-
+                # for order in all_orders['data']:
+                #     user_name =
                 response_object = {
                     "msg": "Successfully got all parcel delivery orders",
                     "data": all_orders
