@@ -100,3 +100,15 @@ class DataValidation:
         if not username_regex.match(name):
             return False
         return True
+
+    @staticmethod
+    def validate_string_input(input_string):
+        """
+        String input validator
+        :param input_string:
+        :return:
+        """
+        string_regex = re.compile("^[A-Za-z\s]{4,30}$")
+        if not string_regex.match(input_string):
+            return False
+        return True
