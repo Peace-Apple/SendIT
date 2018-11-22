@@ -189,6 +189,17 @@ class DatabaseConnection:
                                                                                                  parcel_id)
         self.cursor.execute(update)
 
+    def check_for_cancelled_parcels(self, parcel_id):
+        """
+        Get a specific parcel to check whether delivery status has been cancelled
+        :param parcel_id:
+        :return:
+        """
+        cancel = """SELECT * FROM parcels WHERE parcel_id = '{}' AND delivery_status = 'cancelled';"""\
+            .format(parcel_id)
+        self.cursor.execute(cancel)
+        return True
+
     def check_admin(self):
         """
         method to set user_type to true which gives a user admin privileges.
