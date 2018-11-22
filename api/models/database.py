@@ -2,6 +2,7 @@
 Module to handle connection to the database, creation of tables, queries to the database and data storage.
 """
 
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
@@ -10,9 +11,15 @@ class DatabaseConnection:
 
     def __init__(self):
 
-        # self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123", host="127.0.0.1",
-        #                                    port="5432")
-        self.connection = psycopg2.connect(database="test_db")
+        if os.getenv("HEROKU_ENV") == 'heroku_database':
+            self.connection = psycopg2.connect(
+                host="ec2-54-163-230-178.compute-1.amazonaws.com", database="dojl24m42btue", user="wzkwuzmzzsvthh",
+                port="5432", password="1cf1d11b7d7b44d7b999b36797814916c24029f8b75e7b9644252232423d5437")
+        else:
+            # self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123",
+            #                                    host="127.0.0.1",
+            #                                    port="5432")
+            self.connection = psycopg2.connect(database="test_db")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
         self.dict_cursor = self.connection.cursor(cursor_factory=RealDictCursor)
