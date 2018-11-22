@@ -141,8 +141,8 @@ class LoginController(MethodView):
         """
         if self.data.get_one_parcel_order(parcel_id):
 
-            updated_status = self.data.update_destination(destination, parcel_id)
-            if isinstance(updated_status, object):
+            updated_destination = self.data.update_destination(destination, parcel_id)
+            if isinstance(updated_destination, object):
                 response_object = {
                     'message': 'Destination has been updated successfully'
 
