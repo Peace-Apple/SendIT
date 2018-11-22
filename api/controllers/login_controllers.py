@@ -63,6 +63,7 @@ class LoginController(MethodView):
             return jsonify(response_object), 404
 
     @jwt_required
+    # @swag_from('..docs/get_specific_user_parcels.yml')
     def get(self, user_id):
         """
         Method to return a single users parcel orders
@@ -86,6 +87,7 @@ class LoginController(MethodView):
         return ResponseErrors.permission_denied()
 
     @jwt_required
+    @swag_from('../docs/user_updates.yml')
     def put(self, parcel_id):
         """
         Method for user to cancel a parcel delivery order
