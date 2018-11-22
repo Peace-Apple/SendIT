@@ -34,14 +34,14 @@ class DatabaseConnection:
             """,
             """
             CREATE TABLE IF NOT EXISTS "parcels" (
-                    parcel_id SERIAL NOT NULL PRIMARY KEY, 
+                    parcel_id SERIAL NOT NULL PRIMARY KEY,
                     user_id INTEGER NOT NULL,
                     FOREIGN KEY (user_id) REFERENCES "users" (user_id)
                     ON UPDATE CASCADE ON DELETE CASCADE,
                     receivers_name VARCHAR(255) NOT NULL,
                     pickup_location VARCHAR(255) NOT NULL,
                     destination VARCHAR(255) NOT NULL,
-                    weight INTEGER NOT NULL, 
+                    weight INTEGER NOT NULL,
                     delivery_status VARCHAR(255) NOT NULL DEFAULT 'New',
                     present_location VARCHAR(255) NOT NULL DEFAULT 'Office',
                     order_date TIMESTAMP DEFAULT NOW() NOT NULL
