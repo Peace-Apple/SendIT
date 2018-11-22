@@ -8,6 +8,7 @@ from api.handlers.response_errors import ResponseErrors
 from api.utils.validations import DataValidation
 from api.models.database import DatabaseConnection
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flasgger import swag_from
 
 
 class ParcelController(MethodView):
@@ -23,6 +24,7 @@ class ParcelController(MethodView):
     data = DatabaseConnection()
 
     @jwt_required
+    @swag_from('../docs/post_parcel.yml')
     def post(self):
         """
         post method to handle posting an order
@@ -68,6 +70,7 @@ class ParcelController(MethodView):
         return ResponseErrors.permission_denied()
 
     @jwt_required
+    @swag_from('../docs/get_all_parcels.yml')
     def get(self, parcel_id=None):
         """
         get method to return a list of parcel delivery orders
@@ -125,6 +128,7 @@ class ParcelController(MethodView):
         return ResponseErrors.denied_permission()
 
     @jwt_required
+    @swag_from('../docs/admin_updates.yml')
     def put(self, parcel_id):
         """
         Method to update the parcel delivery status
