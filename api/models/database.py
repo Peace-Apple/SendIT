@@ -3,6 +3,7 @@ Module to handle connection to the database, creation of tables, queries to the 
 """
 
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 class DatabaseConnection:
@@ -13,6 +14,7 @@ class DatabaseConnection:
                                            port="5432")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
+        self.dict_cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
     def create_tables(self):
         """
@@ -142,8 +144,8 @@ class DatabaseConnection:
         :return:
         """
         user_parcels = """SELECT * FROM parcels WHERE user_id ='{}';""".format(user_id)
-        self.cursor.execute(user_parcels)
-        get_parcels = self.cursor.fetchall()
+        self.dict_cursor.execute(user_parcels)
+        get_parcels = self.dict_cursor.fetchall()
         return get_parcels
 
     def update_destination(self, destination,  parcel_id):
