@@ -173,3 +173,12 @@ class ResponseErrors:
             "status": "fail",
             "error_message": "Delivery status {} not found".format(delivery_status),
         }), 404
+
+    @staticmethod
+    def parcel_already_cancelled():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'Can not cancel a parcel order twice',
+            'data': False
+        }
+        return jsonify(response_object), 406
