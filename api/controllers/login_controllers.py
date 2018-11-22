@@ -9,7 +9,8 @@ from api.handlers.response_errors import ResponseErrors
 from api.auth.authenticate import Authenticate
 from api.models.database import DatabaseConnection
 from api.models.parcel_models import Orders
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, \
+    get_jwt_identity
 from api.utils.validations import DataValidation
 
 
@@ -46,7 +47,8 @@ class LoginController(MethodView):
             response_object = {
                 'status': 'success',
                 'message': 'You are logged in',
-                'access_token': create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=3600)),
+                'access_token': create_access_token(identity=user,
+                                                    expires_delta=datetime.timedelta(minutes=3600)),
                 'logged_in_as': str(user[1])
                 }
 
