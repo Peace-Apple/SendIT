@@ -9,9 +9,8 @@ class DatabaseConnection:
 
     def __init__(self):
 
-        # self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123",
-        #                                    host="127.0.0.1", port="5432")
-        self.connection = psycopg2.connect(database="test_db")
+        self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123",
+                                           host="127.0.0.1", port="5432")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
 

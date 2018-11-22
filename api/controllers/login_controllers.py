@@ -9,13 +9,16 @@ from api.handlers.response_errors import ResponseErrors
 from api.auth.authenticate import Authenticate
 from api.models.database import DatabaseConnection
 from api.models.parcel_models import Orders
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, \
+    get_jwt_identity
+from api.utils.validations import DataValidation
 
 
 class LoginController(MethodView):
     """
     User login class
     """
+    destination = None
     data = DatabaseConnection()
     auth = Authenticate()
     order = Orders()
@@ -44,7 +47,8 @@ class LoginController(MethodView):
             response_object = {
                 'status': 'success',
                 'message': 'You are logged in',
-                'access_token': create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=3600)),
+                'access_token': create_access_token(identity=user,
+                                                    expires_delta=datetime.timedelta(minutes=3600)),
                 'logged_in_as': str(user[1])
                 }
 
@@ -96,20 +100,31 @@ class LoginController(MethodView):
             post_data = request.get_json()
 
             key = "delivery_status"
-
+            key1 = "destination"
             status = ['cancelled']
 
-            if key not in post_data:
-                return ResponseErrors.missing_fields(key)
-            try:
-                delivery_status = post_data['delivery_status'].strip()
-            except AttributeError:
-                return ResponseErrors.invalid_data_format()
-            if delivery_status not in status:
-                return ResponseErrors.delivery_status_not_found(delivery_status)
+            if key1 in post_data:
+                if key1 not in post_data:
+                    return ResponseErrors.missing_fields(key1)
+                if not post_data['destination']:
+                    return ResponseErrors.empty_data_fields()
+                if DataValidation.check_string_of_numbers(post_data['destination']):
+                    return ResponseErrors.invalid_data_format()
+                return self.update_parcel_destination(post_data['destination'].strip(), parcel_id)
 
-            if self.data.get_one_parcel_order(parcel_id):
-
+            elif key:
+                if key not in post_data:
+                    return ResponseErrors.missing_fields(key)
+                try:
+                    delivery_status = post_data['delivery_status'].strip()
+                except AttributeError:
+                    return ResponseErrors.invalid_data_format()
+                if not delivery_status:
+                    return ResponseErrors.empty_data_fields()
+                if DataValidation.check_string_of_numbers(delivery_status):
+                    return ResponseErrors.invalid_data_format()
+                if delivery_status not in status:
+                    return ResponseErrors.delivery_status_not_found(delivery_status)
                 updated_status = self.data.cancel_delivery_order(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
@@ -117,6 +132,23 @@ class LoginController(MethodView):
                     }
                     return jsonify(response_object), 202
 
-            return ResponseErrors.no_items('order')
+            return ResponseErrors.permission_denied()
 
-        return ResponseErrors.permission_denied()
+    def update_parcel_destination(self, destination, parcel_id):
+        """
+        Method to update the destination of a parcel delivery order
+        :param destination:
+        :param parcel_id:
+        :return:
+        """
+        if self.data.get_one_parcel_order(parcel_id):
+
+            updated_destination = self.data.update_destination(destination, parcel_id)
+            if isinstance(updated_destination, object):
+                response_object = {
+                    'message': 'Destination has been updated successfully'
+
+                }
+                return jsonify(response_object), 202
+
+        return ResponseErrors.no_items('order')

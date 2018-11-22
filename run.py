@@ -22,7 +22,8 @@ def admin():
 
 @app.route('/')
 def index():
-    return 'Welcome to SendIT, We deliver your parcels as fast as you make your orders!'
+    return 'Welcome to SendIT, ' \
+           'We deliver your parcels as fast as you make your orders!'
 
 
 if __name__ == '__main__':
