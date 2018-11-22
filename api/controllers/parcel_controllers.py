@@ -140,26 +140,40 @@ class ParcelController(MethodView):
             post_data = request.get_json()
 
             key = "delivery_status"
-            key1 = "present_location"
+            key_1 = "present_location"
 
             status = ['inTransit', 'completed']
-            if key1 in post_data:
-                return self.update_present_location(post_data['present_location'], parcel_id)
+            if key_1 in post_data:
+                try:
+                    present_location = post_data['present_location'].strip()
+                except AttributeError:
+                    return ResponseErrors.invalid_data_format()
+                if not self.val.validate_string_input(present_location):
+                    return ResponseErrors.invalid_input()
+                if not present_location:
+                    return ResponseErrors.empty_data_fields()
+                if DataValidation.check_string_of_numbers(present_location):
+                    return ResponseErrors.invalid_data_format()
+                return self.update_present_location(present_location, parcel_id)
             elif key in post_data:
                 try:
                     delivery_status = post_data['delivery_status'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
+                if not self.val.validate_string_input(delivery_status):
+                    return ResponseErrors.invalid_input()
+                if not delivery_status:
+                    return ResponseErrors.empty_data_fields()
+                if DataValidation.check_string_of_numbers(delivery_status):
+                    return ResponseErrors.invalid_data_format()
                 if delivery_status not in status:
                     return ResponseErrors.delivery_status_not_found(delivery_status)
-                if delivery_status:
-                    updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
-                    if isinstance(updated_status, object):
-                        response_object = {
-                            'message': 'Status has been updated successfully'
-                        }
-                        return jsonify(response_object), 202
-                return jsonify({'error': 'Please input a status'}), 400
+                updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
+                if isinstance(updated_status, object):
+                    response_object = {
+                        'message': 'Status has been updated successfully'
+                    }
+                    return jsonify(response_object), 202
 
         return ResponseErrors.denied_permission()
 
