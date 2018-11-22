@@ -23,6 +23,7 @@ https://peace-apple.github.io/SendIT/
 This link takes you where the user interface template is hosted on gh-pages.
 
 #### Heroku:    
+https://apple-sendit.herokuapp.com/
 
 This link takes you to the api that is hosted on heroku.
 
