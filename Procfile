@@ -1,1 +1,1 @@
-web: gunicorn --workers=2 run:app
+web: gunicorn --workers=1 run:app
