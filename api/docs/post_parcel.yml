@@ -1,7 +1,7 @@
 Add Order
 ---
 tags:
-  - Orders (User routes)
+  - Parcels (User routes)
 parameters:
   - name: Authorization
     in: header
