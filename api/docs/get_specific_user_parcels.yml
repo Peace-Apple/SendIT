@@ -1,7 +1,7 @@
-Get User Orders
+Parcels
 ---
 tags:
-  - Updates
+  - Parcels (User routes)
 parameters:
   - name: Authorization
     in: header
