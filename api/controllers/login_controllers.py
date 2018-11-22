@@ -113,6 +113,8 @@ class LoginController(MethodView):
                 return self.update_parcel_destination(post_data['destination'].strip(), parcel_id)
 
             elif key:
+                if not self.check_for_cancelled_parcels(self, parcel_id):
+                    return ResponseErrors.parcel_already_cancelled()
                 if key not in post_data:
                     return ResponseErrors.missing_fields(key)
                 try:
@@ -132,7 +134,7 @@ class LoginController(MethodView):
                     }
                     return jsonify(response_object), 202
 
-            return ResponseErrors.permission_denied()
+        return ResponseErrors.permission_denied()
 
     def update_parcel_destination(self, destination, parcel_id):
         """
