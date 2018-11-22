@@ -1,6 +1,6 @@
 ## SENDIT
 [![Build Status](https://travis-ci.org/Peace-Apple/SendIT.svg?branch=develop)](https://travis-ci.org/Peace-Apple/SendIT)
-[![Coverage Status](https://coveralls.io/repos/github/Peace-Apple/SendIT/badge.svg?branch=ft-challenge-two)](https://coveralls.io/github/Peace-Apple/SendIT?branch=ft-challenge-two)
+[![Coverage Status](https://coveralls.io/repos/github/Peace-Apple/SendIT/badge.svg?branch=develop)](https://coveralls.io/github/Peace-Apple/SendIT?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1c2a090696fb6dbedf32/maintainability)](https://codeclimate.com/github/Peace-Apple/SendIT/maintainability)
 
 ### About
