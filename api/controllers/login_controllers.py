@@ -112,6 +112,8 @@ class LoginController(MethodView):
                 return self.update_parcel_destination(post_data['destination'].strip(), parcel_id)
 
             elif key:
+                if not self.check_for_cancelled_parcels(self, parcel_id):
+                    return ResponseErrors.parcel_already_cancelled()
                 if key not in post_data:
                     return ResponseErrors.missing_fields(key)
                 try:
