@@ -1,10 +1,10 @@
-from api.models.user_model import Users
+from api.models.user_model import UserModel
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Authenticate:
 
-    myUser = Users()
+    myUser = UserModel()
 
     @staticmethod
     def hash_password(password):
