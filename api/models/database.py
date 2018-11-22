@@ -16,10 +16,10 @@ class DatabaseConnection:
                 host="ec2-54-163-230-178.compute-1.amazonaws.com", database="dojl24m42btue", user="wzkwuzmzzsvthh",
                 port="5432", password="1cf1d11b7d7b44d7b999b36797814916c24029f8b75e7b9644252232423d5437")
         else:
-            # self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123",
-            #                                    host="127.0.0.1",
-            #                                    port="5432")
-            self.connection = psycopg2.connect(database="test_db")
+            self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123",
+                                               host="127.0.0.1",
+                                               port="5432")
+            # self.connection = psycopg2.connect(database="test_db")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
         self.dict_cursor = self.connection.cursor(cursor_factory=RealDictCursor)
@@ -97,6 +97,18 @@ class DatabaseConnection:
         check_username = self.cursor.fetchone()
         return check_username
 
+    def find_user_by_id(self, user_id):
+        """
+        find a specific user given a user id
+        :param user_id:
+        :return:
+        """
+
+        user = "SELECT * FROM users WHERE user_id ='{}'".format(user_id)
+        self.cursor.execute(user)
+        check_id = self.cursor.fetchone()
+        return check_id
+
     def find_user_by_email(self, email):
         """
         find a specific user given an email
@@ -130,8 +142,8 @@ class DatabaseConnection:
         :return:
         """
         all_orders = "SELECT * FROM parcels;"
-        self.cursor.execute(all_orders)
-        parcels = self.cursor.fetchall()
+        self.dict_cursor.execute(all_orders)
+        parcels = self.dict_cursor.fetchall()
         return parcels
 
     def get_one_parcel_order(self, parcel_id):
@@ -141,8 +153,8 @@ class DatabaseConnection:
         :return:
         """
         one = """SELECT * FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
-        self.cursor.execute(one)
-        parcel = self.cursor.fetchone()
+        self.dict_cursor.execute(one)
+        parcel = self.dict_cursor.fetchone()
         return parcel
 
     def get_specific_user_parcels(self, user_id):
