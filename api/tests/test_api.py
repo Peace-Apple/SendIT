@@ -182,7 +182,6 @@ class TestSendIT(unittest.TestCase):
 
         self.assertTrue(response_data['status'], 'success')
         self.assertTrue(response_data['message'], 'You are logged in')
-        self.assertTrue(response_data['access_token'])
         self.assertTrue(response_data['logged_in_as'], 'Apple')
         self.assertTrue(login_user.content_type, 'application/json')
         self.assertEqual(login_user.status_code, 200)
