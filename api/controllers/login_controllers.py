@@ -114,14 +114,14 @@ class LoginController(MethodView):
                 return self.update_parcel_destination(post_data['destination'].strip(), parcel_id)
 
             elif key:
-                if not self.check_for_cancelled_parcels(self, parcel_id):
-                    return ResponseErrors.parcel_already_cancelled()
                 if key not in post_data:
                     return ResponseErrors.missing_fields(key)
                 try:
                     delivery_status = post_data['delivery_status'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
+                if not self.val.validate_string_input(delivery_status):
+                    return ResponseErrors.invalid_input()
                 if not delivery_status:
                     return ResponseErrors.empty_data_fields()
                 if DataValidation.check_string_of_numbers(delivery_status):
