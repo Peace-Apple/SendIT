@@ -66,7 +66,7 @@ class DatabaseConnection:
 
     def insert_user(self, user_name, email, phone_number, password):
         """
-        insert user details into the database table users
+        insert user details into the database table users.
         :param user_name:
         :param email:
         :param phone_number:

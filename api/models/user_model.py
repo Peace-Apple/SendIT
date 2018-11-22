@@ -9,6 +9,7 @@ class UserModel:
     """
     Model to hold user data by storing it in the database
     """
+    data = DatabaseConnection()
 
     def __init__(self, user_name=None, email=None, phone_number=None, password=None):
 
@@ -25,13 +26,6 @@ class UserModel:
         self.phone_number = phone_number
         self.user_type = None
         self.user_id = None
-
-
-class Users:
-    """
-    Define user module attributes accessed by callers
-    """
-    data = DatabaseConnection()
 
     def register_user(self, user_name=None, email=None, phone_number=None, password=None):
         """

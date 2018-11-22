@@ -4,7 +4,7 @@ module to handle signup of the user
 from flask import request, jsonify
 from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
-from api.models.user_model import Users
+from api.models.user_model import UserModel
 from api.utils.validations import DataValidation
 from api.auth.authenticate import Authenticate
 
@@ -13,7 +13,7 @@ class SignupController(MethodView):
     """
     Registering a new user
     """
-    myUser = Users()
+    myUser = UserModel()
     val = DataValidation()
 
     def post(self):
