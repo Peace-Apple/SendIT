@@ -3,16 +3,19 @@ Module to handle connection to the database, creation of tables, queries to the 
 """
 
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 class DatabaseConnection:
 
     def __init__(self):
 
-        self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123",
-                                           host="127.0.0.1", port="5432")
+        # self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123", host="127.0.0.1",
+        #                                    port="5432")
+        self.connection = psycopg2.connect(database="test_db")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
+        self.dict_cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
     def create_tables(self):
         """
@@ -34,14 +37,14 @@ class DatabaseConnection:
             """,
             """
             CREATE TABLE IF NOT EXISTS "parcels" (
-                    parcel_id SERIAL NOT NULL PRIMARY KEY, 
+                    parcel_id SERIAL NOT NULL PRIMARY KEY,
                     user_id INTEGER NOT NULL,
                     FOREIGN KEY (user_id) REFERENCES "users" (user_id)
                     ON UPDATE CASCADE ON DELETE CASCADE,
                     receivers_name VARCHAR(255) NOT NULL,
                     pickup_location VARCHAR(255) NOT NULL,
                     destination VARCHAR(255) NOT NULL,
-                    weight INTEGER NOT NULL, 
+                    weight INTEGER NOT NULL,
                     delivery_status VARCHAR(255) NOT NULL DEFAULT 'New',
                     present_location VARCHAR(255) NOT NULL DEFAULT 'Office',
                     order_date TIMESTAMP DEFAULT NOW() NOT NULL
@@ -142,8 +145,8 @@ class DatabaseConnection:
         :return:
         """
         user_parcels = """SELECT * FROM parcels WHERE user_id ='{}';""".format(user_id)
-        self.cursor.execute(user_parcels)
-        get_parcels = self.cursor.fetchall()
+        self.dict_cursor.execute(user_parcels)
+        get_parcels = self.dict_cursor.fetchall()
         return get_parcels
 
     def update_destination(self, destination,  parcel_id):
@@ -188,6 +191,17 @@ class DatabaseConnection:
         update = """UPDATE parcels SET present_location = '{}' WHERE parcel_id = '{}';""".format(present_location,
                                                                                                  parcel_id)
         self.cursor.execute(update)
+
+    def check_for_cancelled_parcels(self, parcel_id):
+        """
+        Get a specific parcel to check whether delivery status has been cancelled
+        :param parcel_id:
+        :return:
+        """
+        cancel = """SELECT * FROM parcels WHERE parcel_id = '{}' AND delivery_status = 'cancelled';"""\
+            .format(parcel_id)
+        self.cursor.execute(cancel)
+        return True
 
     def check_admin(self):
         """
