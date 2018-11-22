@@ -8,7 +8,7 @@ from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authenticate import Authenticate
 from api.models.database import DatabaseConnection
-from api.models.parcel_models import Orders
+from api.models.parcel_models import ParcelModel
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from api.utils.validations import DataValidation
 from flasgger import swag_from
@@ -21,7 +21,7 @@ class LoginController(MethodView):
     destination = None
     data = DatabaseConnection()
     auth = Authenticate()
-    order = Orders()
+    order = ParcelModel()
 
     @swag_from('../docs/login.yml')
     def post(self):
@@ -71,7 +71,6 @@ class LoginController(MethodView):
         """
         user = get_jwt_identity()
         user_type = user[4]
-        user_id = user[0]
 
         if user_id and user_type == "FALSE":
             my_parcels = self.data.get_specific_user_parcels(user_id)
