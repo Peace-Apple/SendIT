@@ -17,6 +17,9 @@ class TestSendIT(unittest.TestCase):
         self.app = app
         self.client = self.app.test_client
 
+    def tearDown(self):
+        pass
+
     def register_user(self, user_name=None, email=None, phone_number=None, password=None):
         return self.client().post(
             '/api/v2/auth/signup/',

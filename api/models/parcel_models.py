@@ -10,6 +10,7 @@ class ParcelModel:
     """
     This class uses the database to store data persistently
     """
+    data = DatabaseConnection()
 
     def __init__(self, receivers_name=None, pickup_location=None, destination=None, weight=None, user_id=None):
         self.parcel_id = None
@@ -21,10 +22,6 @@ class ParcelModel:
         self.order_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.delivery_status = 'New'
         self.present_location = 'Office'
-
-
-class Orders:
-    data = DatabaseConnection()
 
     def make_delivery_order(self, receivers_name=None, pickup_location=None, destination=None, weight=None,
                             user_id=None):

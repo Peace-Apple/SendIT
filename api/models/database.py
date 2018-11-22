@@ -97,6 +97,18 @@ class DatabaseConnection:
         check_username = self.cursor.fetchone()
         return check_username
 
+    def find_user_by_id(self, user_id):
+        """
+        find a specific user given a user id
+        :param user_id:
+        :return:
+        """
+
+        user = "SELECT * FROM users WHERE user_id ='{}'".format(user_id)
+        self.cursor.execute(user)
+        check_id = self.cursor.fetchone()
+        return check_id
+
     def find_user_by_email(self, email):
         """
         find a specific user given an email
@@ -130,8 +142,8 @@ class DatabaseConnection:
         :return:
         """
         all_orders = "SELECT * FROM parcels;"
-        self.cursor.execute(all_orders)
-        parcels = self.cursor.fetchall()
+        self.dict_cursor.execute(all_orders)
+        parcels = self.dict_cursor.fetchall()
         return parcels
 
     def get_one_parcel_order(self, parcel_id):
@@ -141,8 +153,8 @@ class DatabaseConnection:
         :return:
         """
         one = """SELECT * FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
-        self.cursor.execute(one)
-        parcel = self.cursor.fetchone()
+        self.dict_cursor.execute(one)
+        parcel = self.dict_cursor.fetchone()
         return parcel
 
     def get_specific_user_parcels(self, user_id):

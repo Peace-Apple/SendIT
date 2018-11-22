@@ -8,7 +8,7 @@ from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authenticate import Authenticate
 from api.models.database import DatabaseConnection
-from api.models.parcel_models import Orders
+from api.models.parcel_models import ParcelModel
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from api.utils.validations import DataValidation
 from flasgger import swag_from
@@ -21,7 +21,7 @@ class LoginController(MethodView):
     destination = None
     data = DatabaseConnection()
     auth = Authenticate()
-    order = Orders()
+    order = ParcelModel()
 
     @swag_from('../docs/login.yml')
     def post(self):
@@ -63,6 +63,7 @@ class LoginController(MethodView):
             return jsonify(response_object), 404
 
     @jwt_required
+    # @swag_from('..docs/get_specific_user_parcels.yml')
     def get(self, user_id):
         """
         Method to return a single users parcel orders
@@ -70,7 +71,6 @@ class LoginController(MethodView):
         """
         user = get_jwt_identity()
         user_type = user[4]
-        user_id = user[0]
 
         if user_id and user_type == "FALSE":
             my_parcels = self.data.get_specific_user_parcels(user_id)
@@ -86,6 +86,7 @@ class LoginController(MethodView):
         return ResponseErrors.permission_denied()
 
     @jwt_required
+    @swag_from('../docs/user_updates.yml')
     def put(self, parcel_id):
         """
         Method for user to cancel a parcel delivery order
@@ -114,14 +115,14 @@ class LoginController(MethodView):
                 return self.update_parcel_destination(post_data['destination'].strip(), parcel_id)
 
             elif key:
-                if not self.check_for_cancelled_parcels(self, parcel_id):
-                    return ResponseErrors.parcel_already_cancelled()
                 if key not in post_data:
                     return ResponseErrors.missing_fields(key)
                 try:
                     delivery_status = post_data['delivery_status'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
+                if not self.val.validate_string_input(delivery_status):
+                    return ResponseErrors.invalid_input()
                 if not delivery_status:
                     return ResponseErrors.empty_data_fields()
                 if DataValidation.check_string_of_numbers(delivery_status):
