@@ -191,8 +191,8 @@ class TestSendIT(unittest.TestCase):
         Test for proper registered user login
         :return:
         """
-        self.register_user('Joan', 'apple@gmail.com', '0704194672', 'acireba')
-        login_user = self.login_user('Apple', 'acireba')
+        self.register_user('Joan', 'jojo@gmail.com', '0704194672', 'acireba')
+        login_user = self.login_user('Joan', 'acireba')
 
         response_data = json.loads(login_user.data.decode())
 
@@ -256,7 +256,7 @@ class TestSendIT(unittest.TestCase):
         Test for login with empty fields
         :return:
         """
-        self.register_user('Apple', 'apple@gmail.com', '0704194672', 'pesay')
+        self.register_user('Apple', 'apple@gmail.com', '0704194672', 'acireba')
         login_user = self.login_user('Apple', '')
 
         response_data = json.loads(login_user.data.decode())
@@ -273,10 +273,13 @@ class TestSendIT(unittest.TestCase):
         Test for posting a parcel delivery order
         :return:
         """
-        # admin login
+        # user signup
+        self.register_user('Stella', 'ste@gmail.com', '0704194672', 'acireba')
+
+        # user login
         login = self.login_user('Stella', 'acireba')
 
-        # Add menu item
+        # Add parcel
         add_parcel = self.make_delivery_order("Marvin", "Bunga", "Gaba", 30,
                                               json.loads(login.data.decode())['access_token'])
 
@@ -303,16 +306,18 @@ class TestSendIT(unittest.TestCase):
 
         self.assertTrue(data['status'] == 'fail')
         self.assertTrue(data['message'] == 'Permission denied, Please Login as a user')
-        self.assertEqual(add_parcel.status_code, 401)
+        self.assertEqual(add_parcel.status_code, 403)
 
     def test_post_delivery_order_with_empty_fields(self):
         """
         Test for adding an order with empty fields
         :return:
         """
+        # signup user
+        self.register_user('Sharon', 'Shan@gmail.com', '0704194672', 'acireba')
 
-        # admin login
-        login = self.login_user('Ogal', 'acireba')
+        # user login
+        login = self.login_user('Sharon', 'acireba')
 
         # Add order
         add_parcel = self.make_delivery_order(" ", "Gaba", "bunga", 45, json.loads(login.data.decode())['access_token'])
@@ -330,6 +335,8 @@ class TestSendIT(unittest.TestCase):
         Test for adding a parcel order with missing fields
         :return:
         """
+        # sign up user
+        self.register_user('Ogal', 'ogal@gmail.com', '0704194672', 'acireba')
 
         # user login
         login = self.login_user('Ogal', 'acireba')
@@ -357,8 +364,11 @@ class TestSendIT(unittest.TestCase):
         :return:
         """
 
+        # signup user
+        self.register_user('Suzan', 'sue@gmail.com', '0704194672', 'acireba')
+
         # user login
-        login = self.login_user('Stella', 'acireba')
+        login = self.login_user('Suzan', 'acireba')
 
         # Add parcel order
         print(login.data.decode())
