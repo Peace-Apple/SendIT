@@ -22,6 +22,7 @@ class LoginController(MethodView):
     data = DatabaseConnection()
     auth = Authenticate()
     order = ParcelModel()
+    val = DataValidation()
 
     @swag_from('../docs/login.yml')
     def post(self):
@@ -75,10 +76,23 @@ class LoginController(MethodView):
         if user_id and user_type == "FALSE":
             my_parcels = self.data.get_specific_user_parcels(user_id)
             if isinstance(my_parcels, object):
-
+                user = self.data.find_user_by_id(user_id)
+                orders = []
+                for order in my_parcels:
+                    res_data = {
+                        "user_name": user[1],
+                        "receivers_name": order['receivers_name'],
+                        "pickup_location": order['pickup_location'],
+                        "destination": order['destination'],
+                        "weight": order['weight'],
+                        "delivery_status": order['delivery_status'],
+                        "present_location": order['present_location'],
+                        "order_date": order['order_date']
+                    }
+                    orders.append(res_data)
                 response_object = {
                     "msg": "Successfully got all orders belonging to user",
-                    "data": my_parcels
+                    "data": res_data
                 }
                 return jsonify(response_object), 200
             else:
@@ -129,6 +143,13 @@ class LoginController(MethodView):
                     return ResponseErrors.invalid_data_format()
                 if delivery_status not in status:
                     return ResponseErrors.delivery_status_not_found(delivery_status)
+                parcel = self.data.check_for_cancelled_parcels(parcel_id)
+                if delivery_status == parcel[0] and delivery_status == 'cancelled':
+                    return ResponseErrors.parcel_already_cancelled()
+                deliver = self.data.check_for_delivered_parcel(parcel_id)
+                print(deliver)
+                if delivery_status == deliver[0] and delivery_status == 'completed':
+                    return ResponseErrors.parcel_already_delivered()
                 updated_status = self.data.cancel_delivery_order(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
