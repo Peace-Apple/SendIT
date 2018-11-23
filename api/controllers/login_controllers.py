@@ -71,9 +71,9 @@ class LoginController(MethodView):
         :return:
         """
         user = get_jwt_identity()
-        user_type = user[4]
+        admin = user[4]
 
-        if user_id and user_type == "FALSE":
+        if user_id and admin == "FALSE":
             my_parcels = self.data.get_specific_user_parcels(user_id)
             if isinstance(my_parcels, object):
                 user = self.data.find_user_by_id(user_id)
@@ -92,7 +92,7 @@ class LoginController(MethodView):
                     orders.append(res_data)
                 response_object = {
                     "msg": "Successfully got all orders belonging to user",
-                    "data": res_data
+                    "data": orders
                 }
                 return jsonify(response_object), 200
             else:
@@ -108,10 +108,10 @@ class LoginController(MethodView):
         :return:
         """
         user = get_jwt_identity()
-        user_type = user[4]
+        admin = user[4]
         user_id = user[0]
 
-        if user_type == "FALSE" and user_id:
+        if admin == "FALSE" and user_id:
 
             post_data = request.get_json()
 

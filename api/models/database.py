@@ -5,7 +5,6 @@ Module to handle connection to the database, creation of tables, queries to the 
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from dotenv import load_dotenv
 
 
 class DatabaseConnection:
@@ -17,10 +16,10 @@ class DatabaseConnection:
                 host="ec2-54-163-230-178.compute-1.amazonaws.com", database="dojl24m42btue", user="wzkwuzmzzsvthh",
                 port="5432", password="1cf1d11b7d7b44d7b999b36797814916c24029f8b75e7b9644252232423d5437")
         else:
-            load_dotenv()
-            database_url = os.getenv("DATABASE_URL")
-            self.connection = psycopg2.connect(database_url)
-            # self.connection = psycopg2.connect(database="test_db")
+            # self.connection = psycopg2.connect(database="sendit", user="postgres", password="apple123",
+            #                                    host="127.0.0.1",
+            #                                    port="5432")
+            self.connection = psycopg2.connect(database="test_db")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
         self.dict_cursor = self.connection.cursor(cursor_factory=RealDictCursor)
@@ -38,7 +37,7 @@ class DatabaseConnection:
                     user_name VARCHAR(255) NOT NULL,
                     email VARCHAR(255) UNIQUE NOT NULL,
                     phone_number VARCHAR(255) NOT NULL,
-                    user_type VARCHAR(100) DEFAULT 'FALSE',
+                    admin VARCHAR(100) DEFAULT 'FALSE',
                     password VARCHAR(255) NOT NULL
 
                 )
@@ -239,7 +238,7 @@ class DatabaseConnection:
         method to set user_type to true which gives a user admin privileges.
         :return:
         """
-        self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 1")
+        self.cursor.execute("UPDATE users SET admin = 'TRUE' WHERE user_id = 1")
 
 
 DatabaseConnection().create_tables()
