@@ -57,20 +57,6 @@ class TestSendIT(unittest.TestCase):
 
     # ....................Testing user authentication, signup and login.............................................. #
 
-    # def test_user_registration(self):
-    #     """
-    #     Test successful user signup
-    #     :return:
-    #     """
-    #     register = self.register_user('Omech', 'om@gmail.com', '0704194672', 'acireba')
-    #     received_data = json.loads(register.data.decode())
-    #     print(json.loads(register.data.decode()))
-    #     self.assertTrue(received_data['status'], 'success')
-    #     self.assertTrue(received_data['message'], 'Your account has been created successfully')
-    #     self.assertTrue(received_data['data'])
-    #     self.assertTrue(register.content_type, 'application/json')
-    #     self.assertEqual(register.status_code, 201)
-
     def test_missing_fields_during_signup(self):
         """
         Test for missing fields when registering a new user
@@ -288,25 +274,6 @@ class TestSendIT(unittest.TestCase):
         self.assertTrue(data['message'], 'Successfully posted a parcel delivery order')
         self.assertTrue(data['data'])
         self.assertEqual(add_parcel.status_code, 201)
-
-    def test_post_parcel_order_by_admin(self):
-        """
-        Test for adding an order by the admin
-        :return:
-        """
-
-        # admin login
-        login = self.login_user('Apple', 'acireba')
-
-        # Add a parcel order
-        add_parcel = self.make_delivery_order("Martin", "Wakiso", "Gaba", 30,
-                                              json.loads(login.data.decode())['access_token'])
-
-        data = json.loads(add_parcel.data.decode())
-
-        self.assertIn(data['status'], 'fail')
-        self.assertTrue(data['message'], 'Permission denied, Please Login as a user')
-        self.assertEqual(add_parcel.status_code, 403)
 
     def test_post_delivery_order_with_empty_fields(self):
         """
