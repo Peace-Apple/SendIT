@@ -17,9 +17,6 @@ class TestSendIT(unittest.TestCase):
         self.app = app
         self.client = self.app.test_client
 
-    def tearDown(self):
-        pass
-
     def register_user(self, user_name=None, email=None, phone_number=None, password=None):
         return self.client().post(
             '/api/v2/auth/signup/',
@@ -40,6 +37,22 @@ class TestSendIT(unittest.TestCase):
                 password=password,
             )),
             content_type='application/json'
+        )
+
+    def make_delivery_order(self, receivers_name=None, pickup_location=None, destination=None, weight=None, token=None):
+        return self.client().post(
+            '/api/v2/parcels/',
+            headers=dict(
+                Authorization='Bearer ' + token
+            ),
+            data=json.dumps(dict(
+                receivers_name=receivers_name,
+                pickup_location=pickup_location,
+                destination=destination,
+                weight=weight
+
+            )),
+            content_type="application/json"
         )
 
     # ....................Testing user authentication, signup and login.............................................. #
@@ -173,22 +186,22 @@ class TestSendIT(unittest.TestCase):
         self.assertTrue(register.content_type, 'application/json')
         self.assertEqual(register.status_code, 409)
 
-    # def test_registered_user_login(self):
-    #     """
-    #     Test for proper registered user login
-    #     :return:
-    #     """
-    #     self.register_user('Apple', 'apple@gmail.com', '0704194672', 'acireba')
-    #     login_user = self.login_user('Apple', 'acireba')
-    #
-    #     response_data = json.loads(login_user.data.decode())
-    #
-    #     self.assertTrue(response_data['status'], 'success')
-    #     self.assertTrue(response_data['message'], 'You are logged in')
-    #     self.assertTrue(response_data['access_token'])
-    #     self.assertTrue(response_data['logged_in_as'], 'Apple')
-    #     self.assertTrue(login_user.content_type, 'application/json')
-    #     self.assertEqual(login_user.status_code, 200)
+    def test_registered_user_login(self):
+        """
+        Test for proper registered user login
+        :return:
+        """
+        self.register_user('Joan', 'apple@gmail.com', '0704194672', 'acireba')
+        login_user = self.login_user('Apple', 'acireba')
+
+        response_data = json.loads(login_user.data.decode())
+
+        self.assertTrue(response_data['status'], 'success')
+        self.assertTrue(response_data['message'], 'You are logged in')
+        self.assertTrue(response_data['access_token'])
+        self.assertTrue(response_data['logged_in_as'], 'Joan')
+        self.assertTrue(login_user.content_type, 'application/json')
+        self.assertEqual(login_user.status_code, 200)
 
     def test_non_registered_user_login(self):
         """
@@ -252,3 +265,110 @@ class TestSendIT(unittest.TestCase):
         self.assertTrue(response_data['error_message'], 'Some fields have no data')
         self.assertTrue(login_user.content_type, 'application/json')
         self.assertEqual(login_user.status_code, 400)
+
+    # ....................Testing parcels endpoints.............................................. #
+
+    def test_post_parcel_delivery_order(self):
+        """
+        Test for posting a parcel delivery order
+        :return:
+        """
+        # admin login
+        login = self.login_user('Stella', 'acireba')
+
+        # Add menu item
+        add_parcel = self.make_delivery_order("Marvin", "Bunga", "Gaba", 30,
+                                              json.loads(login.data.decode())['access_token'])
+
+        data = json.loads(add_parcel.data.decode())
+
+        self.assertTrue(data['message'], 'Successfully posted a parcel delivery order')
+        self.assertTrue(data['data'])
+        self.assertEqual(add_parcel.status_code, 201)
+
+    def test_post_parcel_order_by_admin(self):
+        """
+        Test for adding an order by the user
+        :return:
+        """
+
+        # admin login
+        login = self.login_user('Apple', 'acireba')
+
+        # Add a parcel order
+        add_parcel = self.make_delivery_order("Martin", "Wakiso", "Gaba", 30,
+                                              json.loads(login.data.decode())['access_token'])
+
+        data = json.loads(add_parcel.data.decode())
+
+        self.assertTrue(data['status'] == 'fail')
+        self.assertTrue(data['message'] == 'Permission denied, Please Login as a user')
+        self.assertEqual(add_parcel.status_code, 401)
+
+    def test_post_delivery_order_with_empty_fields(self):
+        """
+        Test for adding an order with empty fields
+        :return:
+        """
+
+        # admin login
+        login = self.login_user('Ogal', 'acireba')
+
+        # Add order
+        add_parcel = self.make_delivery_order(" ", "Gaba", "bunga", 45, json.loads(login.data.decode())['access_token'])
+
+        data = json.loads(add_parcel.data.decode())
+
+        self.assertTrue(data['status'], 'fail')
+        self.assertTrue(data['error_message'], 'Some fields have no data')
+        self.assertFalse(data['data'])
+        self.assertTrue(add_parcel.content_type, 'application/json')
+        self.assertEqual(add_parcel.status_code, 400)
+
+    def test_post_parcel_order_with_missing_fields(self):
+        """
+        Test for adding a parcel order with missing fields
+        :return:
+        """
+
+        # user login
+        login = self.login_user('Ogal', 'acireba')
+
+        make_delivery_order = self.client().post(
+            '/api/v2/parcels/',
+            headers=dict(
+                Authorization='Bearer ' + json.loads(login.data.decode())['access_token']
+            ),
+            data=json.dumps(dict()),
+            content_type="application/json"
+        )
+
+        data = json.loads(make_delivery_order.data.decode())
+
+        self.assertTrue(data['status'], 'fail')
+        self.assertTrue(data['error_message'], 'some fields are missing')
+        self.assertTrue(data['data'])
+        self.assertTrue(make_delivery_order.content_type, 'application/json')
+        self.assertEqual(make_delivery_order.status_code, 400)
+
+    def test_post_delivery_order_with_wrong_data_type(self):
+        """
+        Test for adding a parcel order with wrong data type
+        :return:
+        """
+
+        # user login
+        login = self.login_user('Stella', 'acireba')
+
+        # Add parcel order
+        print(login.data.decode())
+        add_parcel = self.make_delivery_order(1000, "Bunga", "Gaba", 30,
+                                              json.loads(login.data.decode())['access_token'])
+
+        data = json.loads(add_parcel.data.decode())
+
+        self.assertTrue(data['status'], 'fail')
+        self.assertTrue(data['error_message'], 'Please use character strings')
+        self.assertFalse(data['data'])
+        self.assertTrue(add_parcel.content_type, 'application/json')
+        self.assertEqual(add_parcel.status_code, 400)
