@@ -304,7 +304,7 @@ class TestSendIT(unittest.TestCase):
 
         data = json.loads(add_parcel.data.decode())
 
-        self.assertTrue(data['status'], 'fail')
+        self.assertIn(data['status'], 'fail')
         self.assertTrue(data['message'], 'Permission denied, Please Login as a user')
         self.assertEqual(add_parcel.status_code, 403)
 
