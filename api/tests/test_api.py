@@ -291,7 +291,7 @@ class TestSendIT(unittest.TestCase):
 
     def test_post_parcel_order_by_admin(self):
         """
-        Test for adding an order by the user
+        Test for adding an order by the admin
         :return:
         """
 
@@ -304,8 +304,8 @@ class TestSendIT(unittest.TestCase):
 
         data = json.loads(add_parcel.data.decode())
 
-        self.assertTrue(data['status'] == 'fail')
-        self.assertTrue(data['message'] == 'Permission denied, Please Login as a user')
+        self.assertTrue(data['status'], 'fail')
+        self.assertTrue(data['message'], 'Permission denied, Please Login as a user')
         self.assertEqual(add_parcel.status_code, 403)
 
     def test_post_delivery_order_with_empty_fields(self):
