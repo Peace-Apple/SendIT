@@ -217,10 +217,21 @@ class DatabaseConnection:
         :param parcel_id:
         :return:
         """
-        cancel = """SELECT * FROM parcels WHERE parcel_id = '{}' AND delivery_status = 'cancelled';"""\
-            .format(parcel_id)
+        cancel = """SELECT delivery_status FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
         self.cursor.execute(cancel)
-        return True
+        parcel = self.cursor.fetchone()
+        return parcel
+
+    def check_for_delivered_parcel(self, parcel_id):
+        """
+        Get a specific parcel to check whether delivery status has been delivered
+        :param parcel_id:
+        :return:
+        """
+        cancel = """SELECT delivery_status FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
+        self.cursor.execute(cancel)
+        parcel = self.cursor.fetchone()
+        return parcel
 
     def check_admin(self):
         """

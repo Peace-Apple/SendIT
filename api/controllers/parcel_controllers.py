@@ -89,11 +89,25 @@ class ParcelController(MethodView):
             all_orders = self.data.get_all_parcel_orders()
 
             if isinstance(all_orders, object):
-                # for order in all_orders['data']:
-                #     user_name =
+                orders = []
+                for order in all_orders:
+
+                    user = self.data.find_user_by_id(order['user_id'])
+                    res_data = {
+                        "user_name": user[1],
+                        "receivers_name": order['receivers_name'],
+                        "pickup_location": order['pickup_location'],
+                        "destination": order['destination'],
+                        "weight": order['weight'],
+                        "delivery_status": order['delivery_status'],
+                        "present_location": order['present_location'],
+                        "order_date": order['order_date']
+                    }
+                    orders.append(res_data)
+
                 response_object = {
                     "msg": "Successfully got all parcel delivery orders",
-                    "data": all_orders
+                    "data": res_data
                     }
                 return jsonify(response_object), 200
             else:
@@ -115,11 +129,22 @@ class ParcelController(MethodView):
         if user_id and user_type == "TRUE":
 
             single_order = self.data.get_one_parcel_order(parcel_id)
-
             if isinstance(single_order, object):
+                user = self.data.find_user_by_id(single_order['user_id'])
+                res_data = {
+                    "user_name": user[1],
+                    "receivers_name": single_order['receivers_name'],
+                    "pickup_location": single_order['pickup_location'],
+                    "destination": single_order['destination'],
+                    "weight": single_order['weight'],
+                    "delivery_status": single_order['delivery_status'],
+                    "present_location": single_order['present_location'],
+                    "order_date": single_order['order_date']
+                }
+
                 response_object = {
                     'msg': 'Successfully got one parcel delivery order',
-                    'data': single_order
+                    'data': res_data
                 }
                 return jsonify(response_object), 200
 

@@ -190,3 +190,12 @@ class ResponseErrors:
             'data': False
         }
         return jsonify(response_object), 406
+
+    @staticmethod
+    def parcel_already_delivered():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'You can not cancel a delivered parcel',
+            'data': False
+        }
+        return jsonify(response_object), 406

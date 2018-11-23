@@ -23,8 +23,14 @@ https://peace-apple.github.io/SendIT/
 This link takes you where the user interface template is hosted on gh-pages.
 
 #### Heroku:    
+https://apple-sendit.herokuapp.com/
 
 This link takes you to the api that is hosted on heroku.
+
+#### Documentation
+https://apple-sendit.herokuapp.com/apidocs/
+
+The above link takes you to the application documentation done using swagger.
 
 ### Getting Started 
 The following will get you started
@@ -48,8 +54,8 @@ The ft-challenge-two folder contains the system backend services.
 - Create a virtual environment and activate it
     ```bash
      Create: virtualenv venv
-     On windows: source /venv/scripts/activate
-     On linux: /venv/bin/activate
+     On windows: source \venv\scripts\activate
+     On linux: \venv\bin\activate
      
     ```
 - Install dependencies 
