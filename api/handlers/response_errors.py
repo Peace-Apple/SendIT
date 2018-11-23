@@ -157,7 +157,7 @@ class ResponseErrors:
             'status': 'fail',
             'message': 'Permission denied, Please Login as a user'
         }
-        return jsonify(response_object), 401
+        return jsonify(response_object), 403
 
     @staticmethod
     def no_items(item):
@@ -173,7 +173,7 @@ class ResponseErrors:
             'status': 'fail',
             'message': 'Permission denied, Please Login as Admin'
         }
-        return jsonify(response_object), 401
+        return jsonify(response_object), 403
 
     @staticmethod
     def delivery_status_not_found(delivery_status):
