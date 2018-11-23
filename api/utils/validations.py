@@ -61,7 +61,7 @@ class DataValidation:
         :param name:
         :return:
         """
-        username_regex = re.compile(" ^(?=(?:.*[a-z]){4})(?=.*[$@_])(?=.*[A-Z])[a-zA-Z$@_]{6}$")
+        username_regex = re.compile("^[A-Za-z\s]{4,30}$")
         if not username_regex.match(name):
             return False
         return True
@@ -96,7 +96,7 @@ class DataValidation:
         :param name:
         :return:
         """
-        username_regex = re.compile(" ^(?=(?:.*[a-z]){4})(?=.*[$@_])(?=.*[A-Z])[a-zA-Z$@_]{6}$")
+        username_regex = re.compile("^[A-Za-z\s]{4,30}$")
         if not username_regex.match(name):
             return False
         return True
@@ -108,7 +108,7 @@ class DataValidation:
         :param input_string:
         :return:
         """
-        string_regex = re.compile(" ^(?=(?:.*[a-z]){4})(?=.*[$@_])(?=.*[A-Z])[a-zA-Z$@_]{6}$")
+        string_regex = re.compile("^[A-Za-z\s]{4,30}$")
         if not string_regex.match(input_string):
             return False
         return True
