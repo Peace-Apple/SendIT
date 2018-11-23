@@ -38,7 +38,7 @@ class DatabaseConnection:
                     user_name VARCHAR(255) NOT NULL,
                     email VARCHAR(255) UNIQUE NOT NULL,
                     phone_number VARCHAR(255) NOT NULL,
-                    user_type VARCHAR(100) DEFAULT 'FALSE',
+                    admin VARCHAR(100) DEFAULT 'FALSE',
                     password VARCHAR(255) NOT NULL
 
                 )
@@ -239,7 +239,7 @@ class DatabaseConnection:
         method to set user_type to true which gives a user admin privileges.
         :return:
         """
-        self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 1")
+        self.cursor.execute("UPDATE users SET admin = 'TRUE' WHERE user_id = 2")
 
 
 DatabaseConnection().create_tables()
