@@ -31,10 +31,10 @@ class ParcelController(MethodView):
         :return:
         """
         user = get_jwt_identity()
-        user_type = user[4]
+        admin = user[4]
         user_id = user[0]
 
-        if user_id and user_type == "FALSE":
+        if user_id and admin == "FALSE":
 
             post_data = request.get_json()
             keys = ("receivers_name", "pickup_location", "destination", "weight")
@@ -79,9 +79,9 @@ class ParcelController(MethodView):
         """
         user = get_jwt_identity()
         user_id = user[0]
-        user_type = user[4]
+        admin = user[4]
 
-        if user_type == "TRUE" and user_id:
+        if admin == "TRUE" and user_id:
 
             if parcel_id:
                 return self.get_single_order(parcel_id)
@@ -123,10 +123,10 @@ class ParcelController(MethodView):
         :return:
         """
         user = get_jwt_identity()
-        user_type = user[4]
+        admin = user[4]
         user_id = user[0]
 
-        if user_id and user_type == "TRUE":
+        if user_id and admin == "TRUE":
 
             single_order = self.data.get_one_parcel_order(parcel_id)
             if isinstance(single_order, object):
@@ -162,10 +162,10 @@ class ParcelController(MethodView):
         :return:
         """
         user = get_jwt_identity()
-        user_type = user[4]
+        admin = user[4]
         user_id = user[0]
 
-        if user_type == "TRUE" and user_id:
+        if admin == "TRUE" and user_id:
 
             post_data = request.get_json()
 
