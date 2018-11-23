@@ -365,6 +365,7 @@ class TestSendIT(unittest.TestCase):
         add_parcel = self.make_delivery_order(1000, "Bunga", "Gaba", 30,
                                               json.loads(login.data.decode())['access_token'])
 
+
         data = json.loads(add_parcel.data.decode())
 
         self.assertTrue(data['status'], 'fail')
