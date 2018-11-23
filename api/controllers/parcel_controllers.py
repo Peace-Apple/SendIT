@@ -107,7 +107,7 @@ class ParcelController(MethodView):
 
                 response_object = {
                     "msg": "Successfully got all parcel delivery orders",
-                    "data": res_data
+                    "data": orders
                     }
                 return jsonify(response_object), 200
             else:
