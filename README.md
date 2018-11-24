@@ -74,11 +74,13 @@ The ft-challenge-two folder contains the system backend services.
 |`/api/v2/auth/signup/`                               |POST  |User signup                               |
 |`/api/v2/auth/login/`                                |POST  |User login                                |
 |`/api/v2/parcels/`                                   |POST  |Posts a parcel delivery order             |
-|`/api/v2/parcels/               `                    |GET   |Gets all parcel delivery orders|
+|`/api/v2/parcels/               `                    |GET   |Gets all parcel delivery orders           |
 |`/api/v1/users/<int:user_id>/parcels/`               |GET   |Gets all parcel orders for a specific user|
 |`/api/v1/parcels/<int:parcel_id>/`                   |GET   |Gets a specific parcel delivery order     |
-|`/api/v1/parcels/<int:parcel_id>/cancel/`            |PUT   |Updates the status of a delivery order    |
-
+|`/api/v1/parcels/<int:parcel_id>/cancel/`            |PUT   |Cancels a parcel delivery order           |
+|`/api/v1/parcels/<int:parcel_id>/destination/`       |PUT   |Updates the destination of delivery order |
+|`/api/v1/parcels/<int:parcel_id>/status/`            |PUT   |Updates the status of a delivery order    |
+|`/api/v1/parcels/<int:parcel_id>/presentLocation/`   |PUT   |Updates the present location of a parcel  |
 
 #### Testing
 
