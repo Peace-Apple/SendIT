@@ -122,7 +122,7 @@ class DatabaseConnection:
 
     def insert_parcel(self, receivers_name, pickup_location, destination,  weight, user_id):
         """
-        insert order details into the table orders
+        insert parcel details into the table parcels
         :param receivers_name:
         :param pickup_location:
         :param destination:
@@ -138,7 +138,7 @@ class DatabaseConnection:
 
     def get_all_parcel_orders(self):
         """
-        get all orders from the parcels table
+        get all parcels from the parcels table
         :return:
         """
         all_orders = "SELECT * FROM parcels;"
@@ -148,7 +148,7 @@ class DatabaseConnection:
 
     def get_one_parcel_order(self, parcel_id):
         """
-        get a specific order from the parcels table using the parcel_id
+        get a specific parcel from the parcels table using the parcel_id
         :param parcel_id:
         :return:
         """
@@ -159,7 +159,7 @@ class DatabaseConnection:
 
     def get_specific_user_parcels(self, user_id):
         """
-        get the order history for a user from the orders table using the user_id
+        get all parcels for a user from the parcels table using the user_id
         :param user_id:
         :return:
         """
@@ -235,7 +235,7 @@ class DatabaseConnection:
 
     def check_admin(self):
         """
-        method to set user_type to true which gives a user admin privileges.
+        method to set admin to true which gives a user admin privileges.
         :return:
         """
         self.cursor.execute("UPDATE users SET admin = 'TRUE' WHERE user_id = 1")
