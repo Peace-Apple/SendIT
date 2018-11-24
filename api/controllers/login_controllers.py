@@ -64,7 +64,7 @@ class LoginController(MethodView):
             return jsonify(response_object), 404
 
     @jwt_required
-    # @swag_from('..docs/get_specific_user_parcels.yml')
+    # @swag_from('..docs/get_user_parcels.yml')
     def get(self, user_id):
         """
         Method to return a single users parcel orders
