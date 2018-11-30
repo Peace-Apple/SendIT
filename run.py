@@ -7,8 +7,10 @@ from api.views.routes import Routes
 from flask_jwt_extended import JWTManager
 from api.models.database import DatabaseConnection
 from flasgger import Swagger
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 Swagger(app)
 app.env = 'development'
 Routes.generate(app)
@@ -24,8 +26,7 @@ def admin():
 
 @app.route('/')
 def index():
-    return 'Welcome to SendIT, ' \
-           'We deliver your parcels as fast as you make your orders!'
+    return 'Welcome to SendIT, We deliver your parcels as fast as you make your orders!'
 
 
 if __name__ == '__main__':
