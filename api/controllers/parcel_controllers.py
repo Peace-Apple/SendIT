@@ -57,8 +57,8 @@ class ParcelController(MethodView):
                     DataValidation.check_string_of_numbers(self.pickup_location) or \
                     DataValidation.check_string_of_numbers(self.destination):
                 return ResponseErrors.invalid_data_format()
-            elif self.weight < 0:
-                return ResponseErrors.negative_number()
+            # elif self.weight < 0:
+            #     return ResponseErrors.negative_number()
 
             new_order = self.order_data.make_delivery_order(self.receivers_name, self.pickup_location, self.destination,
                                                             self.weight, str(user_id))
@@ -95,6 +95,7 @@ class ParcelController(MethodView):
                     user = self.data.find_user_by_id(order['user_id'])
                     res_data = {
                         "user_name": user[1],
+                        "parcel_id": order['parcel_id'],
                         "receivers_name": order['receivers_name'],
                         "pickup_location": order['pickup_location'],
                         "destination": order['destination'],
@@ -106,7 +107,7 @@ class ParcelController(MethodView):
                     orders.append(res_data)
 
                 response_object = {
-                    "msg": "Successfully got all parcel delivery orders",
+                    "message": "Successfully got all parcel delivery orders",
                     "data": orders
                     }
                 return jsonify(response_object), 200
@@ -143,7 +144,7 @@ class ParcelController(MethodView):
                 }
 
                 response_object = {
-                    'msg': 'Successfully got one parcel delivery order',
+                    'message': 'Successfully got one parcel delivery order',
                     'data': res_data
                 }
                 return jsonify(response_object), 200
