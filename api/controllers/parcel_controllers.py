@@ -81,7 +81,7 @@ class ParcelController(MethodView):
         user_id = user[0]
         admin = user[4]
 
-        if admin == "TRUE" and user_id:
+        if admin and user_id:
 
             if parcel_id:
                 return self.get_single_order(parcel_id)
@@ -95,6 +95,8 @@ class ParcelController(MethodView):
                     user = self.data.find_user_by_id(order['user_id'])
                     res_data = {
                         "user_name": user[1],
+                        "phone_number": user[3],
+                        "email": user[2],
                         "parcel_id": order['parcel_id'],
                         "receivers_name": order['receivers_name'],
                         "pickup_location": order['pickup_location'],
@@ -127,13 +129,16 @@ class ParcelController(MethodView):
         admin = user[4]
         user_id = user[0]
 
-        if user_id and admin == "TRUE":
+        if user_id and admin:
 
             single_order = self.data.get_one_parcel_order(parcel_id)
             if isinstance(single_order, object):
                 user = self.data.find_user_by_id(single_order['user_id'])
                 res_data = {
                     "user_name": user[1],
+                    "phone_number": user[3],
+                    "email": user[2],
+                    "parcel_id": single_order['parcel_id'],
                     "receivers_name": single_order['receivers_name'],
                     "pickup_location": single_order['pickup_location'],
                     "destination": single_order['destination'],
