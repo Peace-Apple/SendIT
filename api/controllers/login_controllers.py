@@ -81,6 +81,9 @@ class LoginController(MethodView):
                 for order in my_parcels:
                     res_data = {
                         "user_name": user[1],
+                        "phone_number": user[3],
+                        "email": user[2],
+                        "parcel_id": order['parcel_id'],
                         "receivers_name": order['receivers_name'],
                         "pickup_location": order['pickup_location'],
                         "destination": order['destination'],
@@ -91,7 +94,7 @@ class LoginController(MethodView):
                     }
                     orders.append(res_data)
                 response_object = {
-                    "msg": "Successfully got all orders belonging to user",
+                    "message": "Successfully got all orders belonging to user",
                     "data": orders
                 }
                 return jsonify(response_object), 200
