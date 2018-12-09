@@ -212,25 +212,14 @@ class DatabaseConnection:
                                                                                                  parcel_id)
         self.cursor.execute(update)
 
-    def check_for_cancelled_parcels(self, parcel_id):
+    def check_parcel_delivery_status(self, parcel_id):
         """
-        Get a specific parcel to check whether delivery status has been cancelled
+        Get a specific parcel to check whether delivery status has been cancelled or completed
         :param parcel_id:
         :return:
         """
-        cancel = """SELECT delivery_status FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
-        self.cursor.execute(cancel)
-        parcel = self.cursor.fetchone()
-        return parcel
-
-    def check_for_delivered_parcel(self, parcel_id):
-        """
-        Get a specific parcel to check whether delivery status has been delivered
-        :param parcel_id:
-        :return:
-        """
-        cancel = """SELECT delivery_status FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
-        self.cursor.execute(cancel)
+        status = """SELECT delivery_status FROM parcels WHERE parcel_id = '{}';""".format(parcel_id)
+        self.cursor.execute(status)
         parcel = self.cursor.fetchone()
         return parcel
 
