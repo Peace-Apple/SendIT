@@ -176,11 +176,20 @@ class ResponseErrors:
         return jsonify(response_object), 403
 
     @staticmethod
-    def delivery_status_not_found(delivery_status):
-        return jsonify({
+    def delivery_status_not_accepted(delivery_status):
+        response_object = {
             "status": "fail",
-            "error_message": "Delivery status {} not found, only use cancelled as the value".format(delivery_status),
-        }), 404
+            "error_message": "Delivery status {} not found, status should be inTransit or completed".format(delivery_status)
+        }
+        return jsonify(response_object), 404
+
+    @staticmethod
+    def delivery_status_not_found(delivery_status):
+        response_object = {
+            "status": "fail",
+            "error_message": "Delivery status {} not found, only use cancelled as the value".format(delivery_status)
+        }
+        return jsonify(response_object), 404
 
     @staticmethod
     def parcel_already_cancelled():
@@ -196,6 +205,15 @@ class ResponseErrors:
         response_object = {
             'status': 'fail',
             'error_message': 'You can not cancel a delivered parcel',
+            'data': False
+        }
+        return jsonify(response_object), 406
+
+    @staticmethod
+    def parcel_cancelled_or_completed():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'You can not update a delivered parcel',
             'data': False
         }
         return jsonify(response_object), 406
