@@ -146,13 +146,11 @@ class LoginController(MethodView):
                     return ResponseErrors.invalid_data_format()
                 if delivery_status not in status:
                     return ResponseErrors.delivery_status_not_found(delivery_status)
-                parcel = self.data.check_for_cancelled_parcels(parcel_id)
-                if delivery_status == parcel[0] and delivery_status == 'cancelled':
-                    return ResponseErrors.parcel_already_cancelled()
-                deliver = self.data.check_for_delivered_parcel(parcel_id)
-                print(deliver)
-                if delivery_status == deliver[0] and delivery_status == 'completed':
+                deliver = self.data.check_parcel_delivery_status(parcel_id)
+                if deliver[0] == 'completed':
                     return ResponseErrors.parcel_already_delivered()
+                if deliver[0] == 'cancelled':
+                    return ResponseErrors.parcel_already_cancelled()
                 updated_status = self.data.cancel_delivery_order(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
@@ -170,7 +168,9 @@ class LoginController(MethodView):
         :return:
         """
         if self.data.get_one_parcel_order(parcel_id):
-
+            deliver = self.data.check_parcel_delivery_status(parcel_id)
+            if deliver[0] == 'completed' or deliver[0] == 'cancelled':
+                return ResponseErrors.parcel_cancelled_or_completed()
             updated_destination = self.data.update_destination(destination, parcel_id)
             if isinstance(updated_destination, object):
                 response_object = {
