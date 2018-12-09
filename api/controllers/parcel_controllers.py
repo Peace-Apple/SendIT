@@ -184,10 +184,10 @@ class ParcelController(MethodView):
                     present_location = post_data['present_location'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
-                if not self.val.validate_string_input(present_location):
-                    return ResponseErrors.invalid_input()
                 if not present_location:
                     return ResponseErrors.empty_data_fields()
+                if not self.val.validate_string_input(present_location):
+                    return ResponseErrors.invalid_input()
                 if DataValidation.check_string_of_numbers(present_location):
                     return ResponseErrors.invalid_data_format()
                 return self.update_present_location(present_location, parcel_id)
@@ -196,10 +196,10 @@ class ParcelController(MethodView):
                     delivery_status = post_data['delivery_status'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
-                if not self.val.validate_string_input(delivery_status):
-                    return ResponseErrors.invalid_input()
                 if not delivery_status:
                     return ResponseErrors.empty_data_fields()
+                if not self.val.validate_string_input(delivery_status):
+                    return ResponseErrors.invalid_input()
                 if DataValidation.check_string_of_numbers(delivery_status):
                     return ResponseErrors.invalid_data_format()
                 if delivery_status not in status:
@@ -207,6 +207,9 @@ class ParcelController(MethodView):
                 deliver = self.data.check_parcel_delivery_status(parcel_id)
                 if deliver[0] == 'completed' or deliver[0] == 'cancelled':
                     return ResponseErrors.parcel_cancelled_or_completed()
+                parcel = self.data.get_one_parcel_order(parcel_id)
+                if not parcel['destination'] == parcel['present_location'] and delivery_status == 'completed':
+                    return ResponseErrors.parcel_not_reached_destination()
                 updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
