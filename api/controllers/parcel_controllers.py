@@ -203,7 +203,10 @@ class ParcelController(MethodView):
                 if DataValidation.check_string_of_numbers(delivery_status):
                     return ResponseErrors.invalid_data_format()
                 if delivery_status not in status:
-                    return ResponseErrors.delivery_status_not_found(delivery_status)
+                    return ResponseErrors.delivery_status_not_accepted(delivery_status)
+                deliver = self.data.check_parcel_delivery_status(parcel_id)
+                if deliver[0] == 'completed' or deliver[0] == 'cancelled':
+                    return ResponseErrors.parcel_cancelled_or_completed()
                 updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
@@ -221,7 +224,9 @@ class ParcelController(MethodView):
         :return:
         """
         if self.data.get_one_parcel_order(parcel_id):
-
+            deliver = self.data.check_parcel_delivery_status(parcel_id)
+            if deliver[0] == 'completed' or deliver[0] == 'cancelled':
+                return ResponseErrors.parcel_cancelled_or_completed()
             updated_location = self.data.update_present_location(present_location, parcel_id)
             if isinstance(updated_location, object):
                 response_object = {
