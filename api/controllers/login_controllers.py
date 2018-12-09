@@ -138,10 +138,10 @@ class LoginController(MethodView):
                     delivery_status = post_data['delivery_status'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
-                if not self.val.validate_string_input(delivery_status):
-                    return ResponseErrors.invalid_input()
                 if not delivery_status:
                     return ResponseErrors.empty_data_fields()
+                if not self.val.validate_string_input(delivery_status):
+                    return ResponseErrors.invalid_input()
                 if DataValidation.check_string_of_numbers(delivery_status):
                     return ResponseErrors.invalid_data_format()
                 if delivery_status not in status:
