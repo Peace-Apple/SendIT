@@ -47,8 +47,8 @@ class ResponseErrors:
     @staticmethod
     def empty_data_storage():
         response_object = {
-            'status': 'success',
-            'message': 'No parcel delivery orders currently',
+            'status': 'fail',
+            'error_message': 'No parcel delivery orders currently',
             'data': False
         }
         return jsonify(response_object), 404
@@ -214,6 +214,15 @@ class ResponseErrors:
         response_object = {
             'status': 'fail',
             'error_message': 'You can not update a delivered parcel',
+            'data': False
+        }
+        return jsonify(response_object), 406
+
+    @staticmethod
+    def parcel_not_reached_destination():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'You cannot deliver a parcel that has not reached its destination',
             'data': False
         }
         return jsonify(response_object), 406
