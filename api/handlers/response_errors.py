@@ -101,12 +101,13 @@ class ResponseErrors:
     @staticmethod
     def invalid_email():
         req = request.get_json()
-        return jsonify({
+        response_object = {
             "status": "fail",
-            "error_message": "User email {0} is wrong, It should be in the format (xxxxx@xxxx.xxx).format(req['email']",
+            "error_message": "User email is wrong, It should be in the format (xxxxx@xxxx.xxx)",
             "data": req
 
-        }), 400
+        }
+        return jsonify(response_object), 400
 
     @staticmethod
     def invalid_phone_number():
@@ -213,7 +214,7 @@ class ResponseErrors:
     def parcel_cancelled_or_completed():
         response_object = {
             'status': 'fail',
-            'error_message': 'You can not update a delivered parcel',
+            'error_message': 'You can not update a cancelled or delivered parcel',
             'data': False
         }
         return jsonify(response_object), 406
