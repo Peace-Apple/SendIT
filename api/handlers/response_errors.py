@@ -47,8 +47,8 @@ class ResponseErrors:
     @staticmethod
     def empty_data_storage():
         response_object = {
-            'status': 'success',
-            'message': 'No parcel delivery orders currently',
+            'status': 'fail',
+            'error_message': 'No parcel delivery orders currently',
             'data': False
         }
         return jsonify(response_object), 404
@@ -101,12 +101,13 @@ class ResponseErrors:
     @staticmethod
     def invalid_email():
         req = request.get_json()
-        return jsonify({
+        response_object = {
             "status": "fail",
-            "error_message": "User email {0} is wrong, It should be in the format (xxxxx@xxxx.xxx).format(req['email']",
+            "error_message": "User email is wrong, It should be in the format (xxxxx@xxxx.xxx)",
             "data": req
 
-        }), 400
+        }
+        return jsonify(response_object), 400
 
     @staticmethod
     def invalid_phone_number():
@@ -176,11 +177,20 @@ class ResponseErrors:
         return jsonify(response_object), 403
 
     @staticmethod
-    def delivery_status_not_found(delivery_status):
-        return jsonify({
+    def delivery_status_not_accepted(delivery_status):
+        response_object = {
             "status": "fail",
-            "error_message": "Delivery status {} not found, only use cancelled as the value".format(delivery_status),
-        }), 404
+            "error_message": "Delivery status {} not found, status should be inTransit or completed".format(delivery_status)
+        }
+        return jsonify(response_object), 404
+
+    @staticmethod
+    def delivery_status_not_found(delivery_status):
+        response_object = {
+            "status": "fail",
+            "error_message": "Delivery status {} not found, only use cancelled as the value".format(delivery_status)
+        }
+        return jsonify(response_object), 404
 
     @staticmethod
     def parcel_already_cancelled():
@@ -196,6 +206,24 @@ class ResponseErrors:
         response_object = {
             'status': 'fail',
             'error_message': 'You can not cancel a delivered parcel',
+            'data': False
+        }
+        return jsonify(response_object), 406
+
+    @staticmethod
+    def parcel_cancelled_or_completed():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'You can not update a cancelled or delivered parcel',
+            'data': False
+        }
+        return jsonify(response_object), 406
+
+    @staticmethod
+    def parcel_not_reached_destination():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'You cannot deliver a parcel that has not reached its destination',
             'data': False
         }
         return jsonify(response_object), 406

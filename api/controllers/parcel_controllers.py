@@ -57,8 +57,8 @@ class ParcelController(MethodView):
                     DataValidation.check_string_of_numbers(self.pickup_location) or \
                     DataValidation.check_string_of_numbers(self.destination):
                 return ResponseErrors.invalid_data_format()
-            elif self.weight < 0:
-                return ResponseErrors.negative_number()
+            # elif self.weight < 0:
+            #     return ResponseErrors.negative_number()
 
             new_order = self.order_data.make_delivery_order(self.receivers_name, self.pickup_location, self.destination,
                                                             self.weight, str(user_id))
@@ -81,7 +81,7 @@ class ParcelController(MethodView):
         user_id = user[0]
         admin = user[4]
 
-        if admin == "TRUE" and user_id:
+        if admin and user_id:
 
             if parcel_id:
                 return self.get_single_order(parcel_id)
@@ -95,6 +95,9 @@ class ParcelController(MethodView):
                     user = self.data.find_user_by_id(order['user_id'])
                     res_data = {
                         "user_name": user[1],
+                        "phone_number": user[3],
+                        "email": user[2],
+                        "parcel_id": order['parcel_id'],
                         "receivers_name": order['receivers_name'],
                         "pickup_location": order['pickup_location'],
                         "destination": order['destination'],
@@ -106,7 +109,7 @@ class ParcelController(MethodView):
                     orders.append(res_data)
 
                 response_object = {
-                    "msg": "Successfully got all parcel delivery orders",
+                    "message": "Successfully got all parcel delivery orders",
                     "data": orders
                     }
                 return jsonify(response_object), 200
@@ -126,13 +129,16 @@ class ParcelController(MethodView):
         admin = user[4]
         user_id = user[0]
 
-        if user_id and admin == "TRUE":
+        if user_id and admin:
 
             single_order = self.data.get_one_parcel_order(parcel_id)
             if isinstance(single_order, object):
                 user = self.data.find_user_by_id(single_order['user_id'])
                 res_data = {
                     "user_name": user[1],
+                    "phone_number": user[3],
+                    "email": user[2],
+                    "parcel_id": single_order['parcel_id'],
                     "receivers_name": single_order['receivers_name'],
                     "pickup_location": single_order['pickup_location'],
                     "destination": single_order['destination'],
@@ -143,7 +149,7 @@ class ParcelController(MethodView):
                 }
 
                 response_object = {
-                    'msg': 'Successfully got one parcel delivery order',
+                    'message': 'Successfully got one parcel delivery order',
                     'data': res_data
                 }
                 return jsonify(response_object), 200
@@ -178,10 +184,10 @@ class ParcelController(MethodView):
                     present_location = post_data['present_location'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
-                if not self.val.validate_string_input(present_location):
-                    return ResponseErrors.invalid_input()
                 if not present_location:
                     return ResponseErrors.empty_data_fields()
+                if not self.val.validate_string_input(present_location):
+                    return ResponseErrors.invalid_input()
                 if DataValidation.check_string_of_numbers(present_location):
                     return ResponseErrors.invalid_data_format()
                 return self.update_present_location(present_location, parcel_id)
@@ -190,14 +196,20 @@ class ParcelController(MethodView):
                     delivery_status = post_data['delivery_status'].strip()
                 except AttributeError:
                     return ResponseErrors.invalid_data_format()
-                if not self.val.validate_string_input(delivery_status):
-                    return ResponseErrors.invalid_input()
                 if not delivery_status:
                     return ResponseErrors.empty_data_fields()
+                if not self.val.validate_string_input(delivery_status):
+                    return ResponseErrors.invalid_input()
                 if DataValidation.check_string_of_numbers(delivery_status):
                     return ResponseErrors.invalid_data_format()
                 if delivery_status not in status:
-                    return ResponseErrors.delivery_status_not_found(delivery_status)
+                    return ResponseErrors.delivery_status_not_accepted(delivery_status)
+                deliver = self.data.check_parcel_delivery_status(parcel_id)
+                if deliver[0] == 'completed' or deliver[0] == 'cancelled':
+                    return ResponseErrors.parcel_cancelled_or_completed()
+                parcel = self.data.get_one_parcel_order(parcel_id)
+                if not parcel['destination'] == parcel['present_location'] and delivery_status == 'completed':
+                    return ResponseErrors.parcel_not_reached_destination()
                 updated_status = self.data.update_delivery_status(delivery_status, parcel_id)
                 if isinstance(updated_status, object):
                     response_object = {
@@ -215,7 +227,9 @@ class ParcelController(MethodView):
         :return:
         """
         if self.data.get_one_parcel_order(parcel_id):
-
+            deliver = self.data.check_parcel_delivery_status(parcel_id)
+            if deliver[0] == 'completed' or deliver[0] == 'cancelled':
+                return ResponseErrors.parcel_cancelled_or_completed()
             updated_location = self.data.update_present_location(present_location, parcel_id)
             if isinstance(updated_location, object):
                 response_object = {
