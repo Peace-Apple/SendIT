@@ -6,6 +6,7 @@ import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash
 
 
 class DatabaseConnection:
@@ -223,12 +224,28 @@ class DatabaseConnection:
         parcel = self.cursor.fetchone()
         return parcel
 
+
     def check_admin(self):
         """
         method to set admin to true which gives a user admin privileges.
+        :param user_name:
+        :param email:
+        :param phone_number:
+        :param admin:
+        :param password:
         :return:
         """
-        self.cursor.execute("UPDATE users SET admin = 'TRUE' WHERE user_id = 1")
+        admin_password = generate_password_hash("applelove")
 
+        self.cursor.execute("SELECT * FROM users WHERE user_name =%s AND email=%s",("apple", "acireba@gmail.com", ))
+        user = self.cursor.rowcount
+        if user >= 1:
+            return True
+
+        add_user = """INSERT INTO users (user_name, email, phone_number, admin, password)
+                   VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format("apple", "acireba@gmail.com","0704194672", True, admin_password)
+        self.cursor.execute(add_user)
+        return True
+        
 
 DatabaseConnection().create_tables()
