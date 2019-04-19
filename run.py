@@ -18,16 +18,11 @@ app.config['JWT_SECRET_KEY'] = 'apple123'
 jwt = JWTManager(app)
 
 
-@app.before_first_request
-def admin():
-    data = DatabaseConnection()
-    data.check_admin()
-
-
 @app.route('/')
 def index():
     return 'Welcome to SendIT, We deliver your parcels as fast as you make your orders!'
 
-
+data = DatabaseConnection()
 if __name__ == '__main__':
+    data.check_admin()
     app.run(debug=True)
