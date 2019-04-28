@@ -104,20 +104,6 @@ class TestSendIT(unittest.TestCase):
         self.assertTrue(register.content_type, 'application/json')
         self.assertEqual(register.status_code, 400)
 
-    def test_invalid_password(self):
-        """
-        Test for password less than 5 characters
-        :return:
-        """
-        register = self.register_user('Apple', 'apple@gmail.com', '0704194672', 'mat')
-        response_data = json.loads(register.data.decode())
-        self.assertTrue(response_data['status'], 'fail')
-        self.assertTrue(response_data['error_message'],
-                        'Password is wrong. It should be at-least 5 characters long, and alphanumeric.')
-        self.assertFalse(response_data['data'])
-        self.assertTrue(register.content_type, 'application/json')
-        self.assertEqual(register.status_code, 400)
-
     def test_invalid_email_registration(self):
         """
         Test for registration with invalid email
@@ -197,7 +183,7 @@ class TestSendIT(unittest.TestCase):
         login_user = self.login_user('Anna', 'acireba')
         data = json.loads(login_user.data.decode())
         self.assertTrue(data['status'], 'fail')
-        self.assertTrue(data['message'], 'User does not exist.')
+        self.assertTrue(data['error_message'], 'User does not exist.')
         self.assertTrue(login_user.content_type, 'application/json')
         self.assertEqual(login_user.status_code, 404)
 

@@ -51,7 +51,10 @@ class LoginController(MethodView):
                 'message': 'You are logged in',
                 'access_token': create_access_token(identity=user,
                                                     expires_delta=datetime.timedelta(minutes=3600)),
-                'logged_in_as': str(user[1])
+                'logged_in_as': str(user[1]),
+                'user_id': user[0],
+                'email': user[2],
+                'contact': user[3],
                 }
 
             return jsonify(response_object), 200
@@ -59,7 +62,7 @@ class LoginController(MethodView):
         else:
             response_object = {
                 'status': 'fail',
-                'message': 'User does not exist.'
+                'error_message': 'User does not exist.'
             }
             return jsonify(response_object), 404
 
