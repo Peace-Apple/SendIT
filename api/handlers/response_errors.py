@@ -93,7 +93,7 @@ class ResponseErrors:
     def invalid_password():
         response_object = {
             'status': 'fail',
-            'error_message': 'Password is wrong. It should be at-least 5 characters long, and alphanumeric.',
+            'error_message': 'Password is wrong. It should be at-least 8 characters long.',
             'data': False
         }
         return jsonify(response_object), 400
