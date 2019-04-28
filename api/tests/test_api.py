@@ -113,7 +113,7 @@ class TestSendIT(unittest.TestCase):
         response_data = json.loads(register.data.decode())
         self.assertTrue(response_data['status'], 'fail')
         self.assertTrue(response_data['error_message'],
-                        'Password is wrong. It should be at-least 5 characters long.')
+                        'Password is wrong. It should be at-least 5 characters long, and alphanumeric.')
         self.assertFalse(response_data['data'])
         self.assertTrue(register.content_type, 'application/json')
         self.assertEqual(register.status_code, 400)
@@ -123,7 +123,7 @@ class TestSendIT(unittest.TestCase):
         Test for registration with invalid email
         :return:
         """
-        register = self.register_user('Apple', 'apple@gmail', '0704194672', 'acirebalove')
+        register = self.register_user('Apple', 'apple@gmail', '0704194672', 'acireba')
         response_data = json.loads(register.data.decode())
         self.assertTrue(response_data['status'], 'fail')
         self.assertTrue(response_data['error_message'], 'User email {0} is wrong,'
@@ -137,7 +137,7 @@ class TestSendIT(unittest.TestCase):
         testing invalid phone_number
         :return:
         """
-        register = self.register_user('Apple', 'app0@gmail.com', '070419', 'acirebalove')
+        register = self.register_user('Apple', 'app0@gmail.com', '070419', 'acireba')
         received_data = json.loads(register.data.decode())
         self.assertTrue(received_data['error_message'], 'Contact {0} is wrong. should be in the form, (070*******)'
                                                         'and between 10 and 13 digits')
@@ -150,7 +150,7 @@ class TestSendIT(unittest.TestCase):
         testing invalid username
         :return:
         """
-        register = self.register_user('Apple56', 'apple@gmail.com', '0704194672', 'acirebalove')
+        register = self.register_user('Apple56', 'apple@gmail.com', '0704194672', 'acireba')
         received_data = json.loads(register.data.decode())
         self.assertTrue(received_data['status'], 'fail')
         self.assertTrue(received_data['error_message'], 'A name should consist of only alphabetic characters')
@@ -163,8 +163,8 @@ class TestSendIT(unittest.TestCase):
         Test when the user name already exists
         :return:
         """
-        self.register_user('Apple', 'apple@gmail.com', '0704194672', 'acirebalove')
-        register = self.register_user('Apple', 'app@gmail.com', '0704194672', 'acirebalove')
+        self.register_user('Apple', 'apple@gmail.com', '0704194672', 'acireba')
+        register = self.register_user('Apple', 'app@gmail.com', '0704194672', 'acireba')
         response_data = json.loads(register.data.decode())
         self.assertTrue(response_data['status'], 'fail')
         self.assertTrue(response_data['error_message'], 'Username already taken')
@@ -194,7 +194,7 @@ class TestSendIT(unittest.TestCase):
         Test for login of a non registered user
         :return:
         """
-        login_user = self.login_user('Anna', 'acirebalove')
+        login_user = self.login_user('Anna', 'acireba')
         data = json.loads(login_user.data.decode())
         self.assertTrue(data['status'], 'fail')
         self.assertTrue(data['message'], 'User does not exist.')
