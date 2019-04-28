@@ -18,10 +18,10 @@ class DatabaseConnection:
                 host="ec2-54-163-230-178.compute-1.amazonaws.com", database="dojl24m42btue", user="wzkwuzmzzsvthh",
                 port="5432", password="1cf1d11b7d7b44d7b999b36797814916c24029f8b75e7b9644252232423d5437")
         else:
-            load_dotenv()
-            database_url = os.getenv("DATABASE_URL")
-            self.connection = psycopg2.connect(database_url)
-            # self.connection = psycopg2.connect(database="test_db")
+            # load_dotenv()
+            # database_url = os.getenv("DATABASE_URL")
+            # self.connection = psycopg2.connect(database_url)
+            self.connection = psycopg2.connect(database="test_db")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
         self.dict_cursor = self.connection.cursor(cursor_factory=RealDictCursor)
